@@ -15,7 +15,12 @@
                 </span>
             </div>
             <div>
-                <input type="text" placeholder="所在地区">
+                <picker mode="region" @change="bindRegionChange" v-model="region">
+                    <view class="picker">
+                      <span v-if='!region.length'>所在地区</span>
+                      <span v-else>{{region[0]}}，{{region[1]}}，{{region[2]}}</span>
+                    </view>
+                </picker>
                 <span>
                     <img src="/../static/images/lt.svg" alt="">
                 </span>
@@ -28,14 +33,14 @@
             <div class="label">
                 <p>标签</p>
                 <ul>
-                    <li v-for="(item,index) in labelList" :key='index'>{{item.title}}</li>
+                    <li v-for="(item,index) in labelList" :key='index' :class="{'active':index==ind}" @click='changelabel(index)'>{{item.title}}</li>
                 </ul>
             </div>
             <div class="switch">
                 <p>
                     设置默认地址
                 </p>
-                 <switch/>
+                 <switch @change="switchChange"/>
             </div>
         </div>
         <button>保存</button>
@@ -45,6 +50,7 @@
 export default {
     data(){
         return {
+            region:[],
             labelList:[{
                 title:'家',
                 id:0
@@ -57,9 +63,21 @@ export default {
             },{
                 title:'其他',
                 id:3
-            }]
+            }],
+            ind:null
         }
-    }
+    },
+    methods: {
+         bindRegionChange: function (e) {
+            this.region=e.target.value
+        },
+        changelabel(ind){
+            this.ind=ind
+        },
+        switchChange(e){
+            console.log('switch发送选择改变，携带值为', e.target.value)
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -93,7 +111,7 @@ export default {
         line-height: 90rpx;
         border-bottom: 2rpx solid #f6f6f6;
         font-size: 28rpx;
-        input{
+        input,picker{
             flex: 1;
             height: 90rpx;
             padding-left: 10rpx;
@@ -155,6 +173,10 @@ export default {
                 line-height: 52rpx;
                 text-align: center;
                 color: #323a45;
+                &.active{
+                    background: #33d6c5;
+                    color:#fff;
+                }
             }
         }
     }

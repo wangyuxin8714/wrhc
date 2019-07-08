@@ -39,6 +39,11 @@
     </form>
   </div>
 </template>
+<script>
+export default {
+   
+}
+</script>
 <style lang="scss" scoped>
 .attestation{
   width:100%;

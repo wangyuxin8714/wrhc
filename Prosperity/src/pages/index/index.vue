@@ -2,34 +2,42 @@
   <div class="wrap">
     <div class="wrap_top">
       <div class="wrap_top_seach">
-        <cover-image src="/static/images/search.png"/>
+        <img src="../../../static/images/search.png"/>
       </div>
       <TopTab/>
     </div>
     <div class="wrap_main">
       <div class="main_swiper">
-        <Swipers/>
+        <Swipers :swiperList="chooseGoodList[0].items"/>
       </div>
       <div class="main_go">
         <div class="main_go_div">
           <div class="main_go_left">
-            <cover-image
-              class="main_img"
-              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/73b9906cea8612b23967553ef93c5c55.png"
-            />
+            <img class="main_img" :src="chooseGoodList[1].items[0].imgUrl"/>
           </div>
           <div class="main_go_right">
-            <cover-image
-              class="main_go_top"
-              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/daa273d3f039af3e622f7d2d09680552.png"
-            />
-            <cover-image
-              class="main_go_bottom"
-              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/695f4f58282831fe5d1967762032ad15.jpg"
-            />
+            <img class="main_go_top" :src="chooseGoodList[1].items[1].imgUrl"/>
+            <img class="main_go_bottom" :src="chooseGoodList[1].items[2].imgUrl"/>
           </div>
         </div>
       </div>
+      <div class="main_summer_body" v-for="(item,index) in chooseGoodList" :key="index">
+        <template v-if="index > 2">
+          <template v-if="item.pictUrl">
+            <cover-image
+              class="main_summer_img"
+              :src="item.pictUrl"
+            />
+          </template>
+          <Titles/>
+          <template v-if="item.items">
+            <my-list :types="typeTop" goodList="item.items" />
+          </template>
+        </template>
+      </div>
+
+      <Titles/>
+      <my-list :types="typeLeft" :chooseList="chooseList"/>
     </div>
   </div>
 </template>
@@ -37,26 +45,47 @@
 <script>
 import TopTab from "../../components/topTab";
 import Swipers from "../../components/swiper";
+import Titles from "../../components/firstTitle";
+import myList from "../../components/list";
+import { mapState, mapActions } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      typeLeft: "left",
+      typeTop: "top"
+    };
   },
 
   components: {
     TopTab,
-    Swipers
+    Swipers,
+    Titles,
+    myList
+  },
+  computed: {
+    ...mapState({
+      chooseList: state => state.home.chooseList,
+      chooseGoodList: state => state.home.chooseGoodList
+    })
   },
 
-  methods: {},
+  methods: {
+    ...mapActions({
+      getChooseList: "home/getChooseList",
+      getChooseGood: "home/getChooseGood"
+    })
+  },
 
-  created() {}
+  created() {
+    this.getChooseList(0);
+    this.getChooseGood();
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .wrap {
   width: 100%;
-
   .wrap_top {
     width: 100%;
     height: 80px;
@@ -103,12 +132,13 @@ export default {
       .main_go_right {
         width: 60%;
         height: 100%;
-        .main_go_bottom,.main_go_top {
+        .main_go_bottom,
+        .main_go_top {
           width: 100%;
           height: 50%;
           display: block;
         }
-        .main_go_top{
+        .main_go_top {
           padding-bottom: 4rpx;
           box-sizing: border-box;
         }
@@ -117,6 +147,15 @@ export default {
           box-sizing: border-box;
         }
       }
+    }
+  }
+  .main_summer_body {
+    width: 100%;
+    .main_summer_img {
+      width: 96%;
+      height: 100%;
+      margin: 0 2%;
+      border-radius: 30rpx;
     }
   }
 }

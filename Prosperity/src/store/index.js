@@ -1,23 +1,16 @@
-import Vue from "vue"
-import Vuex, { mapMutations } from "vuex"
+import Vue from "vue";
+import Vuex, { mapMutations } from "vuex";
 // import createLogger from "vuex/dist/logger"
 
-import index from "./modules/index"
+import home from "./modules/home";
 
-
-
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules:{
-        index,
-        
-    },
-    state:{
-       
-    },
-    mutations:{
-       
-    }
-    // plugins:[createLogger()]
-})
+  modules: {
+    home
+  },
+  state: {},
+  mutations: {}
+  // plugins:[createLogger()]
+});

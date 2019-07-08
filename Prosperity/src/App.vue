@@ -26,11 +26,24 @@ export default {
   },
   log () {
     console.log(`log at:${Date.now()}`)
+  
+  
+
   }
+
 }
 </script>
 
 <style>
+*{
+  margin: 0;
+  padding: 0;
+}
+html,body{
+  width: 100%;
+  height: 100%;
+}
+
 .container {
   height: 100%;
   display: flex;

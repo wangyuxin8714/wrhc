@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/main",
+    "pages/CommodityDetails/main",
+    "pages/sharingPages/main",
+    "pages/placeOrder/main",
     "pages/logs/main",
     "pages/counter/main"
   ],

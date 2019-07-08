@@ -1,0 +1,227 @@
+<template>
+  <div class="myView">
+      <div class="myHeader">
+        <img src="/../static/images/logBg.png" alt="">
+        <div>
+           <img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI7Sufpu5lRrLytDLx5cxLXAVKOibVkiaLTiaAnp1W58pQY94vmhxlUvDSY1Zm3gAGRdXBu8K7jCskVQ/132" alt="">
+           <div>
+              <h5>皮卡丘</h5>
+              <p>邀请码:2TWHAR4<span @click="showText">复制</span></p>
+           </div>
+        </div>
+      </div>
+      <div class="myMain">
+        <div  class='myMainTop'>
+          <h5 @click="jumpOrder">我的订单</h5>
+          <div>
+              <dl>
+                <dt>
+                  <img src="/../static/images/dfk.png" alt="">
+                </dt>
+                <dd>
+                  代付款
+                </dd>
+              </dl>
+            <dl>
+              <dt>
+                <img src="/../static/images/dfh.png" alt="">
+              </dt>
+              <dd>
+                代付款
+              </dd>
+              </dl>
+              <dl>
+                <dt>
+                  <img src="/../static/images/dsh.png" alt="">
+                </dt>
+                <dd>
+                  代付款
+                </dd>
+              </dl>
+          </div>
+        </div>
+        <div class="myMainBottom">
+          <ul>
+            <li @click='jumpCoupon()'>
+              <p>
+                <img src="/../static/images/yhj.png" alt="">
+                <span>我的优惠劵</span>
+              </p>
+              <img src="/../static/images/jt.png" alt="">
+            </li>
+            <li @click='jumpAddress()'>
+              <p>
+                <img src="/../static/images/dz.png" alt="">
+                <span>收货地址</span>
+              </p>
+              <img src="/../static/images/jt.png" alt="">
+            </li>
+            <li>
+              <p>
+                <img src="/../static/images/kf.png" alt="">
+                <span>联系客服</span>
+              </p>
+              <img src="/../static/images/jt.png" alt="">
+            </li>
+            <li @click='jumpAttestation()'>
+              <p>
+                <img src="/../static/images/sm.png" alt="">
+                <span>实名认证</span>
+              </p>
+              <img src="/../static/images/jt.png" alt="">
+            </li>
+          </ul>
+        </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+    methods: {
+      jumpOrder(){
+        wx.navigateTo({
+          url:  "/pages/myOrder/main"
+        })
+      },
+      jumpCoupon(){
+        wx.navigateTo({
+            url:  "/pages/couponView/main"
+        })
+      },
+      jumpAddress(){
+        wx.navigateTo({
+            url:  "/pages/addressView/main"
+        })
+      },
+      jumpAttestation(){
+         wx.navigateTo({
+            url:  "/pages/attestationView/main"
+        })
+      },
+      showText(){
+        wx.showToast({
+          title: '已复制邀请码到剪切板',
+          icon: 'none'
+        })
+      }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.myView{
+  width:100%;
+  height:100%;
+  position: fixed;
+}
+.myHeader{
+  width: 100%;
+  height: 93px;
+  position: relative;
+  >img{
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:-999;
+  }
+  >div{
+    display: flex;
+    color:#fff;
+    img{
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      margin: 20px;
+    }
+    div{
+      margin: 22rpx 20rpx 0;
+      h5{
+        font-size: 40rpx;
+        line-height: 2;
+      }
+      p{
+        font-size: 28rpx;
+        span{
+          margin-left: 10rpx;
+          line-height: 2;
+          font-size: 20rpx;
+          background: #35cdd0;
+          color: #fff;
+          padding: 6rpx 10rpx;
+          box-sizing: border-box;
+          border-radius: 10rpx;
+          opacity: .7239;
+        }
+      }
+    }
+  }
+}
+.myMain{
+  width:100%;
+  position: absolute;
+  top: 180rpx;
+  .myMainTop{
+    width: 96%;
+    margin: 0 2%;
+    height: 220rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    h5{
+      width:100%;
+      line-height: 2;
+      padding-left: 20rpx;
+      box-sizing: border-box;
+    }
+    >div{
+        width:100%;
+        display: flex;
+        justify-content: space-around;
+        dl{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          img{
+            width:34px;
+            height:34px;
+          }
+          dd{
+            font-size: 24rpx;
+            color: #70757d;
+          }
+        }
+     }
+  }
+  .myMainBottom{
+    width: 96%;
+    margin: 0 2%;
+    margin-top: 20rpx;
+    ul{
+      background:#fff;
+      li{
+        display: flex;
+        height: 96rpx;
+        justify-content: space-between;
+        p{
+          display: flex;
+          img{
+            width: 36rpx;
+            height: 36rpx;
+            margin: 30rpx;
+          }
+          span{
+            font-size: 28rpx;
+            margin: 30rpx 30rpx 0 0;
+          }
+        }
+        >img{
+          width: 16rpx;
+          height: 24rpx;
+          margin: 34rpx 36rpx 0 0;
+        }
+      }
+    }
+  }
+}
+</style>

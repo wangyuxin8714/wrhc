@@ -1,11 +1,12 @@
 <template>
+
   <scroll-view class="nav" scroll-x style="width: 100%">
     <span @click="tab(index)" :class="{active:index===ind}" v-for="(item,index) in list" :key="index">{{item.anchorName}}</span>
   </scroll-view>
 </template>
 <script>
 
-
+import { mapState, mapActions } from "vuex";
 export default {
   props: ["list"],
   components: {},
@@ -14,15 +15,24 @@ export default {
       ind:0
     };
   },
-  computed: {
-
+   computed: {
+    ...mapState({
+      tabList:state=>state.home.tabList
+    })
   },
   methods: {
+    ...mapActions({
+      getTabList: "home/getTabList"
+    }),
     tab(index){
       this.ind=index
     }
   },
-  created() {},
+  created() {
+    this.getTabList(0)
+    
+  },
+
   mounted() {
     
 
@@ -49,5 +59,6 @@ export default {
 .active{
   color:red;
   border-bottom:4rpx solid red;
+
 }
 </style>

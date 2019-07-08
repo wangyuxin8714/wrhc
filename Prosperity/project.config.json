@@ -7,7 +7,15 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"coverView": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -37,8 +45,13 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "个人中心",
+					"name": "首页",
 					"pathName": "pages/index/main"
+				},
+				{
+					"id": 10,
+					"name": "个人中心",
+					"pathName": "pages/logs/main"
 				},
 				{
 					"id": 1,

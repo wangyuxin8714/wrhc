@@ -1,126 +1,124 @@
 <template>
-  <div @click="clickHandle">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <img class="userinfo-avatar" src="/static/images/user.png" background-size="cover" />
-
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+  <div class="wrap">
+    <div class="wrap_top">
+      <div class="wrap_top_seach">
+        <cover-image src="/static/images/search.png"/>
       </div>
+      <TopTab/>
     </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
+    <div class="wrap_main">
+      <div class="main_swiper">
+        <Swipers/>
       </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" :value="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
-
-    <div class="all">
-        <div class="left">
+      <div class="main_go">
+        <div class="main_go_div">
+          <div class="main_go_left">
+            <cover-image
+              class="main_img"
+              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/73b9906cea8612b23967553ef93c5c55.png"
+            />
+          </div>
+          <div class="main_go_right">
+            <cover-image
+              class="main_go_top"
+              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/daa273d3f039af3e622f7d2d09680552.png"
+            />
+            <cover-image
+              class="main_go_bottom"
+              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/695f4f58282831fe5d1967762032ad15.jpg"
+            />
+          </div>
         </div>
-        <div class="right">
-        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
+import TopTab from "../../components/topTab";
+import Swipers from "../../components/swiper";
 export default {
-  data () {
-    return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
-    }
+  data() {
+    return {};
   },
 
   components: {
-    card
+    TopTab,
+    Swipers
   },
 
-  methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
-      }
-    },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
-  },
+  methods: {},
 
-  created () {
-    // let app = getApp()
-  }
-}
+  created() {}
+};
 </script>
 
-<style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+<style lang="scss" scoped>
+.wrap {
+  width: 100%;
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
+  .wrap_top {
+    width: 100%;
+    height: 80px;
+    .wrap_top_seach {
+      width: 100%;
+      height: 30px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .wrap_main {
+    width: 100%;
+    .main_swiper {
+      width: 100vw;
+      padding: 0 10rpx;
+      height: 39.5vw;
+      margin-bottom: 20rpx;
+      margin-top: 10rpx;
+      box-sizing: border-box;
+    }
+  }
+  .main_go {
+    width: 100%;
+    .main_go_div {
+      display: flex;
+      margin-top: 40rpx;
+      padding: 0 2%;
+      height: 376rpx;
+      box-sizing: border-box;
+      .main_go_left {
+        width: 40%;
+        height: 100%;
+        .main_img {
+          width: 100%;
+          height: 100%;
+          padding-right: 4rpx;
+          box-sizing: border-box;
+        }
+      }
+      .main_go_right {
+        width: 60%;
+        height: 100%;
+        .main_go_bottom,.main_go_top {
+          width: 100%;
+          height: 50%;
+          display: block;
+        }
+        .main_go_top{
+          padding-bottom: 4rpx;
+          box-sizing: border-box;
+        }
+        .main_go_bottom {
+          padding-top: 4rpx;
+          box-sizing: border-box;
+        }
+      }
+    }
+  }
 }
 </style>
+

@@ -26,7 +26,11 @@ export default {
   },
   log () {
     console.log(`log at:${Date.now()}`)
+  
+  
+
   }
+
 }
 </script>
 
@@ -36,7 +40,17 @@ page{
   height:100%;
   background: #f3f7f7;
 }
-/* .container {
+
+*{
+  margin: 0;
+  padding: 0;
+}
+html,body{
+  width: 100%;
+  height: 100%;
+}
+
+.container {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -44,7 +58,7 @@ page{
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} */
+} 
 /* this rule will be remove */
 * {
   transition: width 2s;

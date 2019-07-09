@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="wrap_top">
+    <div class="wrap_top"> 
       <div class="wrap_top_seach">
         <img src="../../../static/images/search.png"/>
       </div>
@@ -29,9 +29,9 @@
               :src="item.pictUrl"
             />
           </template>
-          <Titles/>
           <template v-if="item.items">
-            <my-list :types="typeTop" goodList="item.items" />
+            <Titles/>
+            <my-list :types="typeTop" :goodList="item.items" />
           </template>
         </template>
       </div>

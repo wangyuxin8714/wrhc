@@ -1,10 +1,10 @@
 <template>
   <div class="wrap">
-    <div class="wrap_top">
-      <div class="wrap_top_seach">
+    <div class="wrap_top"> 
+      <div class="wrap_top_seach" @click="goSearch">
         <img src="../../../static/images/search.png"/>
       </div>
-      <TopTab/>
+      <TopTab />
     </div>
     <div class="wrap_main">
       <div class="main_swiper">
@@ -13,11 +13,11 @@
       <div class="main_go">
         <div class="main_go_div">
           <div class="main_go_left">
-            <img class="main_img" :src="chooseGoodList[1].items[0].imgUrl"/>
+            <img class="main_img" @click="godisser(chooseGoodList[1].items[0].jumpUrl)" :src="chooseGoodList[1].items[0].imgUrl"/>
           </div>
           <div class="main_go_right">
-            <img class="main_go_top" :src="chooseGoodList[1].items[1].imgUrl"/>
-            <img class="main_go_bottom" :src="chooseGoodList[1].items[2].imgUrl"/>
+            <img class="main_go_top" @click="godisser(chooseGoodList[1].items[1].jumpUrl)" :src="chooseGoodList[1].items[1].imgUrl"/>
+            <img class="main_go_bottom" @click="godisser(chooseGoodList[1].items[2].jumpUrl)" :src="chooseGoodList[1].items[2].imgUrl"/>
           </div>
         </div>
       </div>
@@ -25,13 +25,15 @@
         <template v-if="index > 2">
           <template v-if="item.pictUrl">
             <cover-image
+              @click="godisser(item.jumpUrl)"
               class="main_summer_img"
               :src="item.pictUrl"
             />
           </template>
-          <Titles/>
-          <template v-if="item.items">
-            <my-list :types="typeTop" goodList="item.items" />
+         
+          <template v-if="item.items"> 
+            <Titles/>
+            <my-list :types="typeTop" :goodList="item.items" />
           </template>
         </template>
       </div>
@@ -65,20 +67,39 @@ export default {
   computed: {
     ...mapState({
       chooseList: state => state.home.chooseList,
-      chooseGoodList: state => state.home.chooseGoodList
+      chooseGoodList: state => state.home.chooseGoodList,
+      
     })
   },
 
   methods: {
     ...mapActions({
       getChooseList: "home/getChooseList",
-      getChooseGood: "home/getChooseGood"
-    })
+      getChooseGood: "home/getChooseGood",
+      getdissertation:"dissertation/getdissertation"
+    }),
+    goSearch(){
+      wx.navigateTo({
+          url:  "/pages/search/main"
+      })
+    },
+    godisser(url){
+      let id=url.split("&")[1].split("=")[1]
+      console.log(id)
+      this.getdissertation(id)
+      wx.navigateTo({
+          url:  "/pages/dissertation/main"
+      })
+    }
   },
 
   created() {
     this.getChooseList(0);
     this.getChooseGood();
+  },
+
+  mounted() {
+    console.log(this.chooseGoodList)
   }
 };
 </script>

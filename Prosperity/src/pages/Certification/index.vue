@@ -34,132 +34,137 @@
     </form>
   </div>
 </template>
+
+
+
 <script>
-export default {
-  props:{
+
+
+// export default {
+//   props:{
     
-  },
-  components:{
+//   },
+//   components:{
 
-  },
-  data(){
-    return {
+//   },
+//   data(){
+//     return {
 
-    }
-  },
-  computed:{
+//     }
+//   },
+//   computed:{
 
-  },
-  methods:{
+//   },
+//   methods:{
 
-  },
-  created(){
+//   },
+//   created(){
 
-  },
-  mounted(){
+//   },
+//   mounted(){
 
-  }
-}
+//   }
+// }
 </script>
 <style scoped lang="scss">
-.wrap{
-  width: 100%;
-  height: 100%;
-  display:flex;
-  flex-direction:column;
-  background:#f3f7f7;
-  position:relative
-}
-.head{
-  border-bottom:1rpx solid #eee;
-  background:#fff;
-  .section{
-    width:100%;
-    height:100rpx;
-    align-items:center;
-    display:flex;
-    label{
-      width:150rpx;
-      margin-left:26rpx;
-      font-size:32rpx;
-      font-weight:700;
-    }
-    input{
-      height:100rpx;
-      flex:1;
-      padding-left:20rpx;
-      font-size:32rpx;
+// .wrap{
+//   width: 100%;
+//   height: 100%;
+//   display:flex;
+//   flex-direction:column;
+//   background:#f3f7f7;
+//   position:relative
+// }
+// .head{
+//   border-bottom:1rpx solid #eee;
+//   background:#fff;
+//   .section{
+//     width:100%;
+//     height:100rpx;
+//     align-items:center;
+//     display:flex;
+//     label{
+//       width:150rpx;
+//       margin-left:26rpx;
+//       font-size:32rpx;
+//       font-weight:700;
+//     }
+//     input{
+//       height:100rpx;
+//       flex:1;
+//       padding-left:20rpx;
+//       font-size:32rpx;
 
-    }
-  }
-}
-.upload{
-  width:100%;
-  height:340rpx;
-  background:#fff;
-  display:flex;
-  flex-direction:column;
-  margin-top:15rpx;
-  h1{
-    font-size:32rpx;
-    padding:28rpx 30rpx;
-    box-sizing:border-box;
-    span{
-      font-size:30rpx;
-      margin-left:30rpx;
-      display:inline-block;
-      color:#999da2;
+//     }
+//   }
+// }
+// .upload{
+//   width:100%;
+//   height:340rpx;
+//   background:#fff;
+//   display:flex;
+//   flex-direction:column;
+//   margin-top:15rpx;
+//   h1{
+//     font-size:32rpx;
+//     padding:28rpx 30rpx;
+//     box-sizing:border-box;
+//     span{
+//       font-size:30rpx;
+//       margin-left:30rpx;
+//       display:inline-block;
+//       color:#999da2;
 
-    }
-  }
-  .pic{
-    display:flex;
-    div{
-      width:330rpx;
-      height:220rpx;
-      border-radius:10rpx;
-      border:1rpx dashed #64e1d3;
-      margin-left:34rpx;
-      position:relative;
-      background: red;
-      img{
-        height:100%;
-        width:100%;
-        border-radius:10rpx;
-      }
-    }
-  }
-}
-.introduce{
-  display:block;
-  h2{
-    margin:20rpx 200rpx;
-    font-size:32rpx;
-  }
-  ul{
-    display:flex;
-    flex-direction:column;
-    li{
-      width:80%;
-      font-size:28rpx;
-      color:#999da2;
-      line-height:44rpx;
-      margin:10rpx 10%;
-      b{
-        padding:0 10rpx;
-        display:inline; 
-      }
-    }
-  }
-}
-button{
-  height:80rpx;
-  width:90%;
-  background:#64e1d3;
-  color:#fff;
-  font-size:36rpx;
-  line-height:80rpx;
-  border-radius:17rpx;
-  margin:0 5%;
-}
+//     }
+//   }
+//   .pic{
+//     display:flex;
+//     div{
+//       width:330rpx;
+//       height:220rpx;
+//       border-radius:10rpx;
+//       border:1rpx dashed #64e1d3;
+//       margin-left:34rpx;
+//       position:relative;
+//       background: red;
+//       img{
+//         height:100%;
+//         width:100%;
+//         border-radius:10rpx;
+//       }
+//     }
+//   }
+// }
+// .introduce{
+//   display:block;
+//   h2{
+//     margin:20rpx 200rpx;
+//     font-size:32rpx;
+//   }
+//   ul{
+//     display:flex;
+//     flex-direction:column;
+//     li{
+//       width:80%;
+//       font-size:28rpx;
+//       color:#999da2;
+//       line-height:44rpx;
+//       margin:10rpx 10%;
+//       b{
+//         padding:0 10rpx;
+//         display:inline; 
+//       }
+//     }
+//   }
+// }
+// button{
+//   height:80rpx;
+//   width:90%;
+//   background:#64e1d3;
+//   color:#fff;
+//   font-size:36rpx;
+//   line-height:80rpx;
+//   border-radius:17rpx;
+//   margin:0 5%;
+// }
 </style>

@@ -10,8 +10,10 @@ const getters = {
 const actions={
     async getdissertation({commit},payload){
         let data=await getdissertation(payload)
-        console.log("data",data.result)
-        commit("getdissertationlist",data.result)
+        // console.log("data",data.result)
+        if(data.result){
+            commit("getdissertationlist",data.result)
+        }
     }   
 }
 //同步

@@ -20,12 +20,7 @@
           <div @click='uploadFile'>
             <img  src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg" alt="">
           </div>
-          <div>
-            <img
-              src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg"
-              alt
-            >
-          </div>
+   
         </div>
       </div>
       <div class="why">

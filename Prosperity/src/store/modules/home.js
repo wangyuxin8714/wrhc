@@ -1,4 +1,4 @@
-﻿import { tabList, chooseTrue, chooseGood } from "../../services/home";
+﻿import { tabList, chooseTrue, chooseGood } from "../../services/";
 
 const state = {
   tabList: [],
@@ -15,13 +15,19 @@ const actions = {
     commit("getTabLists", res.result);
   },
   //获取为你精选好物
-  async getChooseList({ commit }, params) {
+  async getChooseList({ state }, params) {
     const res = await chooseTrue(params);
-    commit("getChooseLists", res.result);
+    //上拉加载判断
+    if (params === 1) {
+      state.chooseList = res.result;
+    } else {
+      state.chooseList = [...state.chooseList, ...res.result];
+    }
   },
-  //获取为你精选数据
+  //获取精选好物数据
   async getChooseGood({ commit }) {
     const res = await chooseGood();
+    //过滤数据
     res.result = res.result.map((item, index) => {
       if (index > 2) {
         if (item.pictUrl) {
@@ -36,7 +42,6 @@ const actions = {
       }
       return item;
     });
-    console.log(res.result);
     commit("getChooseGoods", res.result);
   }
 };
@@ -44,15 +49,9 @@ const actions = {
 const mutations = {
   getTabLists(state, payload) {
     state.tabList = [...payload];
-    // console.log(state.tabList);
-  },
-  getChooseLists(state, payload) {
-    state.chooseList = [...payload];
-    // console.log(state.chooseList);
   },
   getChooseGoods(state, payload) {
     state.chooseGoodList = [...payload];
-    // console.log(state.chooseGoodList);
   }
 };
 

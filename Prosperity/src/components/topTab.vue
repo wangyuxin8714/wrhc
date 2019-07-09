@@ -1,64 +1,70 @@
 <template>
+  <scroll-view class="ul" scroll-x="true">
+    <template v-if="classFlag">
+      <p :class="{active:classFlag}">今日推荐</p>
+      <p v-for="(item,index) in tabList" :key="index" @click="()=>goToClass(index)">{{item.cname}}</p>
+    </template>
 
-  <scroll-view class="nav" scroll-x style="width: 100%">
-    <span @click="tab(index)" :class="{active:index===ind}" v-for="(item,index) in list" :key="index">{{item.anchorName}}</span>
+    <template v-else>
+      <p @click="gotoFirst">今日推荐</p>
+      <p
+        v-for="(item,index) in tabList"
+        :key="index"
+        :class="{active:index===ind}"
+        @click="$emit('tabClick',index)"
+      >{{item.cname}}</p>
+    </template>
   </scroll-view>
 </template>
 <script>
-
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions,mapMutations } from "vuex";
 export default {
-  props: ["list"],
+  props: ["list", "ind"],
   components: {},
   data() {
-    return {
-      ind:0
-    };
+    return {};
   },
-   computed: {
+  computed: {
     ...mapState({
-      tabList:state=>state.home.tabList
+      tabList: state => state.home.tabList,
+      classFlag:state => state.classify.classFlag
     })
   },
   methods: {
     ...mapActions({
       getTabList: "home/getTabList"
     }),
-    tab(index){
-      this.ind=index
-    }
+    ...mapMutations({
+      goToClass:"classify/goToClass",
+      gotoFirst:"classify/gotoFirst"
+    })
   },
   created() {
-    this.getTabList(0)
-    
+    this.getTabList(0);
   },
 
-  mounted() {
-    
-
-  }
+  mounted() {}
 };
 </script>
 <style scoped lang="scss">
-.nav{
-  width:100%;
-  height:92rpx;
-  line-height:92rpx;
-  display:flex;
-  white-space:nowrap;
-  border-bottom:2rpx solid #ececec;
-  justify-content:space-between;
-  background:#fff;
-  span{
-    height:92rpx;
-    margin:0 20rpx;
-    flex:1;
-    display:inline-block
+.ul {
+  width: 100%;
+  white-space: nowrap;
+  height: 50px;
+  background: #fff;
+  p {
+    font-size: 16px;
+    display: inline-block;
+    height: 50px;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0 10px;
+    line-height: 50px;
+    &.active {
+      border-bottom: 6rpx solid #56d2bf;
+      font-weight: 500;
+      color: #56d2bf;
+    }
   }
-}
-.active{
-  color:red;
-  border-bottom:4rpx solid red;
-
 }
 </style>

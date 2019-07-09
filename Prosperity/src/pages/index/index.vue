@@ -2,9 +2,9 @@
   <div class="wrap">
     <div class="wrap_top"> 
       <div class="wrap_top_seach">
-        <img src="../../../static/images/search.png"/>
+        <img src="../../../static/images/search.png">
       </div>
-      <TopTab/>
+      <TopTab :classFlag="classFlag"/>
     </div>
     <div class="wrap_main">
       <div class="main_swiper">
@@ -13,29 +13,26 @@
       <div class="main_go">
         <div class="main_go_div">
           <div class="main_go_left">
-            <img class="main_img" :src="chooseGoodList[1].items[0].imgUrl"/>
+            <img class="main_img" :src="chooseGoodList[1].items[0].imgUrl">
           </div>
           <div class="main_go_right">
-            <img class="main_go_top" :src="chooseGoodList[1].items[1].imgUrl"/>
-            <img class="main_go_bottom" :src="chooseGoodList[1].items[2].imgUrl"/>
+            <img class="main_go_top" :src="chooseGoodList[1].items[1].imgUrl">
+            <img class="main_go_bottom" :src="chooseGoodList[1].items[2].imgUrl">
           </div>
         </div>
       </div>
       <div class="main_summer_body" v-for="(item,index) in chooseGoodList" :key="index">
         <template v-if="index > 2">
           <template v-if="item.pictUrl">
-            <cover-image
-              class="main_summer_img"
-              :src="item.pictUrl"
-            />
+            <cover-image class="main_summer_img" :src="item.pictUrl"/>
           </template>
           <template v-if="item.items">
-            <my-list :types="typeTop" :goodList="item.items" />
+            <Titles/>
+            <my-list :types="typeTop" :goodList="item.items"/>
           </template>
         </template>
       </div>
-
-      <Titles/>
+      <Titles titFlag="titFlag"/>
       <my-list :types="typeLeft" :chooseList="chooseList"/>
     </div>
   </div>
@@ -51,7 +48,9 @@ export default {
   data() {
     return {
       typeLeft: "left",
-      typeTop: "top"
+      typeTop: "top",
+      titFlag: true,
+      page: 1      
     };
   },
 
@@ -74,10 +73,21 @@ export default {
       getChooseGood: "home/getChooseGood"
     })
   },
-
   created() {
-    this.getChooseList(0);
+    this.getChooseList(this.page);
     this.getChooseGood();
+  },
+  //上拉加载数据
+  onReachBottom() {
+    if (this.page > 10) {
+      wx.showToast({
+        title: "没有更多数据了", //提示的内容,
+        icon: "none" //图标,
+      });
+    } else {
+      this.page = this.page + 1;
+      this.getChooseList(this.page);
+    }
   }
 };
 </script>

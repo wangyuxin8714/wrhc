@@ -2,23 +2,29 @@
   <div class="attestation">
     <form bindsubmit="formSubmit" bindreset="formReset">
       <ul class="user">
-         <li>
-            <span>真实姓名</span>
-             <input type="text">
-          </li>
-          <li>
-            <span>身份证号</span>
-            <input type="text">
-          </li>
+        <li>
+          <span>真实姓名</span>
+          <input type="text">
+        </li>
+        <li>
+          <span>身份证号</span>
+          <input type="text">
+        </li>
       </ul>
       <div class="upload">
-        <p>上传身份证照片<span>(图片png、jpg,大小不超过5M)</span></p>
+        <p>
+          上传身份证照片
+          <span>(图片png、jpg,大小不超过5M)</span>
+        </p>
         <div>
           <div @click='uploadFile'>
             <img  src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg" alt="">
           </div>
           <div>
-            <img  src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg" alt="">
+            <img
+              src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg"
+              alt
+            >
           </div>
         </div>
       </div>
@@ -31,7 +37,7 @@
           </li>
           <li>
             <b>●</b>
-            实名认证的规则:购买跨境商品需填写积纳账号注册·人的真实姓名、身份证号码及与实名一致的手机号,部分商品下单时需提供收货人的实名信息(含身份证照片)，具体请以下单时的提示为准。  
+            实名认证的规则:购买跨境商品需填写积纳账号注册·人的真实姓名、身份证号码及与实名一致的手机号,部分商品下单时需提供收货人的实名信息(含身份证照片)，具体请以下单时的提示为准。
           </li>
         </ul>
       </div>
@@ -54,29 +60,29 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.attestation{
-  width:100%;
-  height:100%;
-  display:flex;
+.attestation {
+  width: 100%;
+  height: 100%;
+  display: flex;
   flex-direction: column;
-  .user{
+  .user {
     border-bottom: 1rpx solid #eee;
     background: #fff;
-    li{
+    li {
       width: 100%;
       height: 100rpx;
       align-items: center;
       display: flex;
-      &:nth-child(1){
+      &:nth-child(1) {
         border-bottom: 2rpx solid #f6f6f6;
       }
-      span{
+      span {
         width: 150rpx;
         margin-left: 26rpx;
         font-size: 32rpx;
         font-weight: 700;
       }
-      input{
+      input {
         height: 100rpx;
         flex: 1;
         padding-left: 20rpx;
@@ -92,35 +98,35 @@ export default {
       }
     }
   }
-  .upload{
+  .upload {
     width: 100%;
     height: 340rpx;
     background: #fff;
     display: flex;
     flex-direction: column;
     margin-top: 15rpx;
-    p{
+    p {
       font-size: 32rpx;
       padding: 28rpx 30rpx;
       box-sizing: border-box;
-      span{
+      span {
         font-size: 30rpx;
         margin-left: 30rpx;
         display: inline-block;
         color: #999da2;
       }
     }
-    >div{
+    > div {
       display: flex;
       box-sizing: border-box;
-      justify-content:center; 
-      div{
+      justify-content: center;
+      div {
         width: 330rpx;
-        margin:0 5px;
+        margin: 0 5px;
         height: 220rpx;
         border-radius: 10rpx;
         border: 1rpx dashed #64e1d3;
-        img{
+        img {
           height: 100%;
           width: 100%;
           border-radius: 10rpx;
@@ -128,33 +134,33 @@ export default {
       }
     }
   }
-  .why{
-    width:100%;
+  .why {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    h2{
+    h2 {
       margin: 20rpx 200rpx;
       font-size: 32rpx;
-    } 
-    ul{
-      width:100%;
+    }
+    ul {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      li{
+      li {
         width: 80%;
         font-size: 28rpx;
         color: #999da2;
         line-height: 44rpx;
         margin: 10rpx 10%;
-        b{
+        b {
           padding: 0 10rpx;
           display: inline;
         }
       }
     }
   }
-  button{
+  button {
     height: 80rpx;
     width: 90%;
     background: #64e1d3;

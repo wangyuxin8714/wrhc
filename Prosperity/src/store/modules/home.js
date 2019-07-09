@@ -14,7 +14,7 @@ const actions = {
     const res = await tabList(params);
     commit("getTabLists", res.result);
   },
-  //获取为你精选数据
+  //获取为你精选好物
   async getChooseList({ commit }, params) {
     const res = await chooseTrue(params);
     commit("getChooseLists", res.result);

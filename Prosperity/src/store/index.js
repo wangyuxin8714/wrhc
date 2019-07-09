@@ -11,6 +11,7 @@ import search from "./modules/search"
 import home from "./modules/home";
 import order from "./modules/order";
 
+import commodityDetails from "./modules/commodityDetails";
 
 Vue.use(Vuex);
 
@@ -21,7 +22,8 @@ export default new Vuex.Store({
         dissertation,
         search,
         home,
-        order
+        order,
+        commodityDetails
     },
     state:{
        

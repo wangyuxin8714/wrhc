@@ -29,7 +29,6 @@
               :src="item.pictUrl"
             />
           </template>
-          <Titles/>
           <template v-if="item.items">
             <my-list :types="typeTop" :goodList="item.items" />
           </template>

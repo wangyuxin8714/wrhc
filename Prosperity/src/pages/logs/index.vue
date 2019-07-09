@@ -12,14 +12,14 @@
       </div>
       <div class="myMain">
         <div  class='myMainTop'>
-          <h5 @click="jumpOrder">我的订单</h5>
+          <h5 @click="jumpOrder(0)">我的订单</h5>
           <div>
               <dl>
                 <dt>
                   <img src="/../static/images/dfk.png" alt="">
                 </dt>
                 <dd>
-                  代付款
+                  待付款
                 </dd>
               </dl>
             <dl>
@@ -27,7 +27,7 @@
                 <img src="/../static/images/dfh.png" alt="">
               </dt>
               <dd>
-                代付款
+                 待发货
               </dd>
               </dl>
               <dl>
@@ -35,7 +35,7 @@
                   <img src="/../static/images/dsh.png" alt="">
                 </dt>
                 <dd>
-                  代付款
+                   待收货
                 </dd>
               </dl>
           </div>
@@ -77,11 +77,14 @@
 </template>
 <script>
 export default {
+    computed: {
+    
+    },
     methods: {
-      jumpOrder(){
-        wx.navigateTo({
-          url:  "/pages/myOrder/main"
-        })
+      jumpOrder(id){
+          wx.navigateTo({
+            url:  "/pages/myOrder/main?id="+id
+          })
       },
       jumpCoupon(){
         wx.navigateTo({

@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 14,
 			"list": [
 				{
 					"id": 0,
@@ -115,6 +115,33 @@
 					"name": "提交订单",
 					"pathName": "pages/placeOrder/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "交易成功",
+					"pathName": "pages/transactionView/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "推荐人",
+					"pathName": "pages/recommenderView/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "绑定手机号",
+					"pathName": "pages/bindingiPhone/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "交易详情",
+					"pathName": "pages/transactionDetail/main",
 					"scene": null
 				}
 			]

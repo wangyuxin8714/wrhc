@@ -4,13 +4,20 @@
     </div>
 </template>
 <script>
+import {mapActions} from 'vuex'
 export default {
     methods:{
+       ...mapActions({
+           getAddressList:'address/getAddressList'
+       }),
        jumpAdd(){
         wx.navigateTo({
             url:  "/pages/addAddress/main"
         })
       }
+    },
+    onShow(){
+        this.getAddressList()
     }
 }
 </script>

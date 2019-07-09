@@ -14,7 +14,7 @@
       <div class="upload">
         <p>上传身份证照片<span>(图片png、jpg,大小不超过5M)</span></p>
         <div>
-          <div>
+          <div @click='uploadFile'>
             <img  src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg" alt="">
           </div>
           <div>
@@ -41,7 +41,16 @@
 </template>
 <script>
 export default {
-   
+   methods: {
+     uploadFile(){
+      //  wx.getFileInfo({
+      //     success (res) {
+      //       console.log('res.size......',res)
+      //       // console.log(res.digest)
+      //     }
+      //   })
+     }
+   },
 }
 </script>
 <style lang="scss" scoped>

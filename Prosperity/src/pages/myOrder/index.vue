@@ -1,26 +1,26 @@
 <template>
     <div class="myOrder">
         <div class="orderTab">
-            <span v-for="(item,index) in orderList" :key='index'  :class="{'active':index==ind}">{{item.title}}</span>
+            <span v-for="(item,index) in orderList" :key='index'  :class="{'active':index==ind}" @click='changeInd(index)'>{{item.title}}</span>
         </div>
         <div class="orderMain">
-            <div class="orderList">
+            <div class="orderList" v-for="(item,index) in orderArr" :key='index'>
                 <p  @click='jump'>
-                    <span>2019-07-08 10:10:10</span>
-                    <span>已取消</span>
+                    <span>{{item.createTime}}</span>
+                    <span>{{item.cancleStatus}}</span>
                 </p>
-                <dl>
+                <dl @click='jumpDetail'>
                     <dt>
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
+                        <img :src="item.products[0].mainImgUrl" alt="">
                     </dt>
                     <dd>
                         <h5>
-                            PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML
+                           {{item.products[0].productTitle}}
                         </h5>
-                        <h6>规格:默认</h6>
+                        <h6>规格:{{item.products[0].skuName}}</h6>
                         <p>
-                            <span>￥39</span>
-                            <span>x1</span>
+                            <span>￥{{item.products[0].salesPrice}}</span>
+                            <span>x{{item.products[0].productNumber}}</span>
                         </p>
                     </dd>
                 </dl>
@@ -38,6 +38,7 @@
     </div>
 </template>
 <script>
+import {mapState,mapActions} from 'vuex'
 export default {
     data(){
         return {
@@ -57,13 +58,54 @@ export default {
             ind:0
         }
     },
+    computed: {
+      ...mapState({
+        orderArr:state=>state.order.orderList
+      })
+    },
     methods: {
+        ...mapActions({
+            orderActions:'order/orderActions'
+        }),
+        changeInd(ind){
+            this.ind=ind
+        },
         jump(){
             wx.navigateTo({
                 url:  "/pages/orderDetail/main"
             })
+        },
+        jumpDetail(){
+            wx.navigateTo({
+                url:  "/pages/CommodityDetails/main"
+            })
         }
     },
+    onLoad(option){
+        this.ind=option.id;
+    },
+    onShow(){
+        this.orderActions({
+          pageIndex:1,
+          orderStatus:this.ind
+        })
+        // if(data.res_code==1){
+        //     wx.showModal({
+        //       title: '温馨提示', //提示的标题,
+        //       content: data.message, //提示的内容,
+        //       showCancel: false,
+        //       confirmText: '确定', //确定按钮的文字，默认为取消，最多 4 个字符,
+        //       confirmColor: '#197DBF', //确定按钮的文字颜色,
+        //       success: res => {
+        //           if (res.confirm) {
+        //             wx.navigateTo({
+        //               url:  "/pages/myOrder/main"
+        //             })
+        //           }
+        //       }
+        //   })
+        // }
+    }
 }
 </script>
 <style lang="scss" scoped>

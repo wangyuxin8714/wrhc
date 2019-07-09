@@ -9,6 +9,8 @@ import address from './modules/address'
 import dissertation from "./modules/dissertation"
 import search from "./modules/search"
 import home from "./modules/home";
+import order from "./modules/order";
+
 
 Vue.use(Vuex);
 
@@ -18,7 +20,8 @@ export default new Vuex.Store({
         address,
         dissertation,
         search,
-        home
+        home,
+        order
     },
     state:{
        

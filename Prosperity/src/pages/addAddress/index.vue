@@ -2,13 +2,13 @@
     <div class='addAddress'>
         <div class="addTop">
             <div>
-                <input type="text" placeholder="收货人" v-model="current.user">
+                <input type="text" placeholder="收货人" v-model="current.consignee">
                 <span>
                     <img src="/../static/images/lt.svg" alt="">
                 </span>
             </div>
             <div>
-                <input type="text" placeholder="手机号" v-model="current.iPhone"  maxlength="11">
+                <input type="text" placeholder="手机号" v-model="current.consigneePhone"  maxlength="11">
                 <span>
                     <span class="iPhone">+86</span>
                     <img src="/../static/images/lt.svg" alt="">
@@ -26,7 +26,7 @@
                 </span>
             </div>
             <div class="text">
-                <textarea placeholder="详细地址：如道路、门牌号、小区、楼栋号、单元 室等" v-model="current.detailAddress"></textarea>
+                <textarea placeholder="详细地址：如道路、门牌号、小区、楼栋号、单元 室等" v-model="current.address"></textarea>
             </div>
         </div>
         <div class="addCenter">
@@ -47,7 +47,7 @@
     </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 export default {
     data(){
         return {
@@ -73,18 +73,22 @@ export default {
         }),
     },
     methods: {
-         bindRegionChange: function (e) {
-            this.current.region=e.target.value
+        ...mapActions({
+            addAddressActions:'address/addAddressActions'
+        }),
+        bindRegionChange: function (e) {
+            this.current.region=[...e.target.value];
+            this.current.code=[...e.target.code]            
         },
         changelabel(ind){
             this.ind=ind
         },
         switchChange(e){
-            console.log('switch发送选择改变，携带值为', e.target.value)
+            this.current.state=e.target.value?1:0;
         },
-        submit(){
+        async submit(){
              // 判断收货人是否为空
-            if (!this.current.user){
+            if (!this.current.consignee){
                 wx.showToast({
                 title: '请输入收货人', //提示的内容,
                 icon: 'none', //图标,
@@ -92,7 +96,7 @@ export default {
                 return
             }
            // 判断手机号是否符合规范
-            if (!/^1(3|4|5|7|8)\d{9}$/.test(this.current.iPhone) || !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.current.iPhone)){
+            if (!/^1(3|4|5|7|8)\d{9}$/.test(this.current.consigneePhone) || !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.current.consigneePhone)){
                 wx.showToast({
                 title: '请输入面试联系人的手机或座机', //提示的内容,
                 icon: 'none', //图标,
@@ -108,12 +112,37 @@ export default {
                 return
             }
              // 判断详细收货地址是否为空
-            if (!this.current.detailAddress){
+            if (!this.current.address){
                 wx.showToast({
                 title: '请输入详细收货地址', //提示的内容,
                 icon: 'none', //图标,
                 });
                 return
+            }
+            this.current.addressTag=this.ind;
+            let data=await this.addAddressActions({
+                provinceId: this.current.code[0],
+                provinceName: this.current.region[0],
+                cityId: this.current.code[1],
+                cityName: this.current.region[1],
+                areaId: this.current.code[2],
+                areaName: this.current.region[2],
+                ...this.current
+            });
+            // console.log('data...',data)
+            if(data.res_code==1){
+                  wx.showModal({
+                    title: '温馨提示', //提示的标题,
+                    content: data.message, //提示的内容,
+                    showCancel: false,
+                    confirmText: '确定', //确定按钮的文字，默认为取消，最多 4 个字符,
+                    confirmColor: '#197DBF', //确定按钮的文字颜色,
+                    success: res => {
+                        if (res.confirm) {
+                           wx.navigateTo({ url: "/pages/addressView/main" });
+                        }
+                    }
+                })
             }
         }
     },

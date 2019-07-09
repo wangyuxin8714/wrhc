@@ -12,7 +12,6 @@ const actions = {
   //获取tab切换数据
   async getTabList({ commit }, params) {
     const res = await tabList(params);
-    res.result = [{ cname: "今日推荐" }, ...res.result];
     commit("getTabLists", res.result);
   },
   //获取为你精选数据

@@ -4,7 +4,7 @@
       <div class="wrap_top_seach">
         <img src="../../../static/images/search.png">
       </div>
-      <TopTab/>
+      <TopTab :classFlag="classFlag"/>
     </div>
     <div class="wrap_main">
       <div class="main_swiper">
@@ -50,7 +50,7 @@ export default {
       typeLeft: "left",
       typeTop: "top",
       titFlag: true,
-      page: 1
+      page: 1      
     };
   },
 
@@ -79,7 +79,7 @@ export default {
   },
   //上拉加载数据
   onReachBottom() {
-    if (this.page > 21) {
+    if (this.page > 10) {
       wx.showToast({
         title: "没有更多数据了", //提示的内容,
         icon: "none" //图标,

@@ -1,35 +1,43 @@
 <template>
   <scroll-view class="ul" scroll-x="true">
-    <p
-      @click="tab(index)"
-      :class="{active:index===ind}"
-      v-for="(item,index) in tabList"
-      :key="index"
-    >{{item.cname}}</p>
+    <template v-if="classFlag">
+      <p :class="{active:classFlag}">今日推荐</p>
+      <p v-for="(item,index) in tabList" :key="index" @click="()=>goToClass(index)">{{item.cname}}</p>
+    </template>
+
+    <template v-else>
+      <p @click="gotoFirst">今日推荐</p>
+      <p
+        v-for="(item,index) in tabList"
+        :key="index"
+        :class="{active:index===ind}"
+        @click="$emit('tabClick',index)"
+      >{{item.cname}}</p>
+    </template>
   </scroll-view>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions,mapMutations } from "vuex";
 export default {
-  props: ["list"],
+  props: ["list", "ind"],
   components: {},
   data() {
-    return {
-      ind: 0
-    };
+    return {};
   },
   computed: {
     ...mapState({
-      tabList: state => state.home.tabList
+      tabList: state => state.home.tabList,
+      classFlag:state => state.classify.classFlag
     })
   },
   methods: {
     ...mapActions({
       getTabList: "home/getTabList"
     }),
-    tab(index) {
-      this.ind = index;
-    }
+    ...mapMutations({
+      goToClass:"classify/goToClass",
+      gotoFirst:"classify/gotoFirst"
+    })
   },
   created() {
     this.getTabList(0);

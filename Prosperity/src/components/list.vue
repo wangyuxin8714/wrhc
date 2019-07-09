@@ -12,7 +12,7 @@
     </template>
     <!-- 左右结构 -->
     <template v-if="types==='left'">
-      <dl class="left" v-for="(item,index) in chooseList" :key="index">
+      <dl class="left" v-for="(item,index) in chooseList" :key="index" @click="gotocommodityDtails(item.productVo)">
         <dt>
           <img class="img" :src="item.productVo.mainImgUrl"/>
         </dt>
@@ -35,16 +35,23 @@
   </div>
 </template>
 <script>
+import {mapMutations} from "vuex"
 export default {
-  props: ["types", "chooseList", "goodList"],
+  props: ["types", "chooseList", "goodList","item"],
   components: {},
   data() {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapMutations({
+      gotocommodityDtails:"commodityDetails/gotocommodityDtails"
+    })
+  },
   created() {},
-  mounted() {}
+  mounted() {
+    
+  }
 };
 </script>
 <style scoped lang="scss">

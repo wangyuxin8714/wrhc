@@ -31,7 +31,7 @@
           </template>
           <template v-if="item.items">
             <Titles/>
-            <my-list :types="typeTop" :goodList="item.items" />
+            <my-list :types="typeTop" :goodList="item.items" :item="item"/>
           </template>
         </template>
       </div>

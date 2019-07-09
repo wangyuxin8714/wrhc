@@ -2,70 +2,97 @@
   <div class="detailBox">
     <div class="box">
       <div class="wop-swiper">
-        <cover-image
-          src="https://jnup.oss-cn-beijing.aliyuncs.com/product/53782027fa7dbc48bcc064b5b5a6b94a.jpg"
-        />
+        <div v-if="obj.supplierProductPictureVoList.length">
+          <mySwiper :swiperList="obj.supplierProductPictureVoList"/>
+        </div>
+        <div v-else>
+          <img :src="obj.mainImgUrl">
+        </div>
       </div>
       <div class="tit">
         <div class="ones">
           <span class="price money">￥</span>
-          <span class="price">65</span>
-          <span class="num">56.55</span>
+          <span class="price">{{obj.salesPrice}}</span>
+          <span class="num">{{obj.vipPrice}}</span>
           <img src="/static/images/黑卡@2x.png" alt>
         </div>
-        <span class="share">分享赚8.45</span>
+        <span class="share">分享赚{{obj.memberDiscountPrice}}</span>
       </div>
       <div class="title">
-        <h3>蓓臣/Babytry 婴儿理发器超静音宝宝家用剃头理发器电推剪充电式1-3岁</h3>
+        <h3>{{obj.title}}</h3>
         <p>快递包邮</p>
       </div>
       <ul class="list">
         <li class="lis">
           <span>选择</span>
           <div class="rights">
-            <span>颜色</span>
-            <span>白色(usb充电) <img src="/static/images/jt.png" alt=""></span>
+            <span>{{chooseArr[0].aname}}</span>
+            <span>
+              <img src="/static/images/jt.png" alt>
+            </span>
           </div>
         </li>
-        <li class="lis">
+        <li class="lis" v-if="obj.description">
           <span>说明</span>
-          <span class="rights right">充电式 全机身防水 陶瓷刀</span>
+          <span class="rights right">{{obj.description}}</span>
         </li>
-        <li class="lis">
+        <li class="lis" v-if="remind">
           <span>提示</span>
-          <span class="rights right">西藏自治区,新疆维吾尔自治区不发货。</span>
+          <span class="rights right">{{remind}}</span>
         </li>
       </ul>
       <div class="imgBox">
-        <cover-image src="https://h5.jinaup.com/product_img/1.jpg"/>
-        <cover-image
-          src="https://jnup.oss-cn-beijing.aliyuncs.com/product/68daa860585aa974a8381be80531f49b.jpg"/>
-        <cover-image src="https://h5.jinaup.com/product_img/2.jpg"/>
+        <div v-for="(item,index) in arr" :key="index">
+          <cover-image :src="item.imgUrl"/>
+        </div>
       </div>
     </div>
     <footer class="footer">
-      <button>分享赚8.45</button>
+      <button>分享赚{{obj.memberDiscountPrice}}</button>
       <button>立即购买</button>
     </footer>
   </div>
 </template>
 <script>
 //import Dialog from "../../components/dialog"
+import mySwiper from "@/components/swiper";
+import { mapActions, mapState } from "vuex";
 export default {
   props: {},
   components: {
     //Dialog
+    mySwiper
   },
   data() {
     return {};
   },
-  computed: {},
-  methods: {},
+  computed: {
+    ...mapState({
+      obj: state => state.commodityDetails.obj,
+      arr: state => state.commodityDetails.arr,
+      remind: state => state.commodityDetails.remind,
+      chooseArr: state => state.commodityDetails.chooseArr,
+    })
+  },
+  methods: {
+    ...mapActions({
+      getDetailList: "commodityDetails/getDetailList",
+      getDetailImgList: "commodityDetails/getDetailImgList",
+      getDetailRemind: "commodityDetails/getDetailRemind",
+      getDetailChoose: "commodityDetails/getDetailChoose"
+    })
+  },
   created() {},
-  mounted() {}
+  mounted() {},
+  onLoad() {
+    this.getDetailList(),
+      this.getDetailImgList(),
+      this.getDetailRemind(),
+      this.getDetailChoose();
+  }
 };
 </script>
-<style  lang="scss">
+<style  scoped lang="scss">
 .detailBox {
   width: 100%;
   height: 100%;
@@ -81,7 +108,7 @@ export default {
       padding: 5rpx 20rpx;
       display: flex;
       justify-content: space-between;
-      .ones { 
+      .ones {
         .price {
           color: #fc5d7b;
           font-size: 44rpx;
@@ -103,10 +130,10 @@ export default {
           margin-left: 10rpx;
         }
       }
-      .share{
+      .share {
         font-size: 24rpx;
         border: 2rpx solid #fc5d7b;
-        color:#fc5d7b;
+        color: #fc5d7b;
         padding: 6rpx 20rpx;
         height: 40rpx;
         line-height: 40rpx;
@@ -153,7 +180,6 @@ export default {
               width: 20rpx;
               height: 20rpx;
               margin-top: 20rpx;
-
             }
           }
         }
@@ -179,8 +205,8 @@ export default {
       flex: 1;
       background: linear-gradient(217deg, #f86367, #fb2579);
       color: #fff;
-      border-radius:0;
-      font-size: 36rpx; 
+      border-radius: 0;
+      font-size: 36rpx;
     }
   }
 }

@@ -6,6 +6,7 @@ import index from "./modules/index"
 import dissertation from "./modules/dissertation"
 import search from "./modules/search"
 import home from "./modules/home";
+import commodityDetails from "./modules/commodityDetails";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
         index,
         dissertation,
         search,
-        home
+        home,
+        commodityDetails
     },
     state:{
        

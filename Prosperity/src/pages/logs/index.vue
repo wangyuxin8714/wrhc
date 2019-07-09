@@ -14,7 +14,7 @@
         <div  class='myMainTop'>
           <h5 @click="jumpOrder(0)">我的订单</h5>
           <div>
-              <dl>
+              <dl @click='jumpOrder(1)'>
                 <dt>
                   <img src="/../static/images/dfk.png" alt="">
                 </dt>
@@ -22,7 +22,7 @@
                   待付款
                 </dd>
               </dl>
-            <dl>
+            <dl @click="jumpOrder(2)">
               <dt>
                 <img src="/../static/images/dfh.png" alt="">
               </dt>
@@ -30,7 +30,7 @@
                  待发货
               </dd>
               </dl>
-              <dl>
+              <dl @click="jumpOrder(3)">
                 <dt>
                   <img src="/../static/images/dsh.png" alt="">
                 </dt>

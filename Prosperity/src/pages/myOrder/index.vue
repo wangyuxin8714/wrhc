@@ -3,11 +3,11 @@
         <div class="orderTab">
             <span v-for="(item,index) in orderList" :key='index'  :class="{'active':index==ind}" @click='changeInd(index)'>{{item.title}}</span>
         </div>
-        <div class="orderMain">
+        <div class="orderMain" v-if="orderArr">
             <div class="orderList" v-for="(item,index) in orderArr" :key='index'>
                 <p  @click='jump'>
                     <span>{{item.createTime}}</span>
-                    <span>{{item.cancleStatus}}</span>
+                    <span>{{item.status}}</span>
                 </p>
                 <dl @click='jumpDetail'>
                     <dt>
@@ -25,11 +25,15 @@
                     </dd>
                 </dl>
                 <div  @click='jump'>
-                  <p> 共1件商品 合计:<span>￥39</span></p>
+                  <p> 共1件商品 合计:<span>￥{{item.totalAmount}}</span></p>
+                  <div class="cancel" v-if="item.cancleStatus==0">
+                      <button>取消订单</button>
+                      <button>去付款{{item.totalAmount}}</button>
+                  </div>
                 </div>
             </div>
         </div>
-        <div class="orderNull" v-if="null">
+        <div class="orderNull" v-else>
             <div>
                 <img src="/../static/images/wudingdan.png" alt="">
                 <p>暂时没有订单噢~</p>
@@ -68,7 +72,11 @@ export default {
             orderActions:'order/orderActions'
         }),
         changeInd(ind){
-            this.ind=ind
+            this.ind=ind;
+             this.orderActions({
+                pageIndex:1,
+                orderStatus:this.ind
+             })
         },
         jump(){
             wx.navigateTo({
@@ -212,6 +220,21 @@ export default {
             font-size: 26rpx;
             color: #484848;
             margin-right: 15px;
+        }
+    }
+    .cancel{
+        height: 60rpx;
+        display: flex;
+        button{
+            font-size: 28rpx;
+            line-height: 60rpx;
+            padding: 0 10rpx;
+            margin-right: 6px;
+            background: #fff;
+        }
+         button:last-child{
+           background: #fc5d7b;
+            color: #fff;
         }
     }
 }

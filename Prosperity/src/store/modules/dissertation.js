@@ -5,12 +5,15 @@ const state = {
 
 const getters = {};
 //异步
-const actions = {
-  async getdissertation({ commit }, payload) {
-    let data = await getdissertation(payload);
-    commit("getdissertationlist", data.result);
-  }
-};
+const actions={
+    async getdissertation({commit},payload){
+        let data=await getdissertation(payload)
+        // console.log("data",data.result)
+        if(data.result){
+            commit("getdissertationlist",data.result)
+        }
+    }   
+}
 //同步
 const mutations = {
   getdissertationlist(state, payload) {

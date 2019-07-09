@@ -11,11 +11,13 @@
       <cover-image
         class="img"
         :src="item.imgUrl"
+        @click="godisser(item.contentValue)"
       />
     </swiper-item>
   </swiper>
 </template>
 <script>
+import {mapActions} from "vuex"
 export default {
   props: ['swiperList'],
   components: {},
@@ -23,9 +25,20 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapActions({
+      getdissertation:"dissertation/getdissertation"
+    }),
+    godisser(id){
+      this.getdissertation(id)
+      wx.navigateTo({
+          url:  "/pages/dissertation/main"
+      })
+    }
+  },
   created() {},
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 <style scoped lang="scss">

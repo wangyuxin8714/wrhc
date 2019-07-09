@@ -4,7 +4,7 @@
       <div class="banner">
         <img :src="dissertationlist.specialImg" alt>
       </div>
-      <TopTab :list="dissertationlist.anchors"></TopTab>
+      <Top :list="dissertationlist.anchors"></Top>
     </div>
     <scroll-view class="listwrap" scroll-y>
       <div class="box" v-for="(item,index) in dissertationlist.anchors" :key="index">
@@ -29,13 +29,15 @@
   </div>
 </template>
 <script>
-import TopTab from "../../components/topTab";
-import Dls from "../../components/dls";
-import { mapState, mapActions, mapMutations } from "vuex";
+import Top from "../../components/top"
+import Dls from "../../components/dls"
+import {mapState,mapActions,mapMutations} from "vuex"
 export default {
-  props: {},
-  components: {
-    TopTab,
+  props:{
+    
+  },
+  components:{
+    Top,
     Dls
   },
   data() {
@@ -46,13 +48,14 @@ export default {
       dissertationlist: state => state.dissertation.dissertationlist
     })
   },
-  methods: {
-    ...mapActions({
-      getdissertation: "dissertation/getdissertation"
-    })
+  methods:{
+    // ...mapActions({
+      // getdissertation:"dissertation/getdissertation"
+    // }),
   },
-  created() {
-    this.getdissertation(182);
+  created(){
+    // this.getdissertation(182)
+    
   },
   onShow() {},
   mounted() {}

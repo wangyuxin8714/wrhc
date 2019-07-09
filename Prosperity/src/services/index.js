@@ -1,1 +1,2 @@
-﻿export * from "./dissertation"
+﻿export * from "./dissertation";
+export * from "./home";

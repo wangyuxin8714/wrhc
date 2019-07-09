@@ -41,17 +41,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 10,
 			"list": [
-				{
-					"id": 0,
-					"name": "首页",
-					"pathName": "pages/index/main"
-				},
 				{
 					"id": 10,
 					"name": "个人中心",
-					"pathName": "pages/logs/main"
+					"pathName": "pages/logs/main",
+					"query": ""
 				},
 				{
 					"id": 1,
@@ -63,8 +59,10 @@
 				{
 					"id": 5,
 					"name": "实名认证",
-					"pathName": "pages/certification/main"
-				},{
+					"pathName": "pages/certification/main",
+					"query": ""
+				},
+				{
 					"id": 9,
 					"name": "分享页面",
 					"pathName": "pages/sharingPages/main",
@@ -79,7 +77,7 @@
 					"scene": null
 				},
 				{
-					"id":3,
+					"id": 3,
 					"name": "专题页面",
 					"pathName": "pages/dissertation/main",
 					"query": "",
@@ -100,14 +98,23 @@
 					"scene": null
 				},
 				{
-					"id":7,
+					"id": 7,
 					"name": "搜索",
 					"pathName": "pages/search/main",
 					"query": ""
-				},{
+				},
+				{
 					"id": 8,
 					"name": "提交订单",
 					"pathName": "pages/placeOrder/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分类页面",
+					"pathName": "pages/classify/main",
+					"query": "",
 					"scene": null
 				}
 			]

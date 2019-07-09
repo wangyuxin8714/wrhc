@@ -24,7 +24,10 @@
           <span>选择</span>
           <div class="rights">
             <span>颜色</span>
-            <span>白色(usb充电) <img src="/static/images/jt.png" alt=""></span>
+            <span>
+              白色(usb充电)
+              <img src="/static/images/jt.png" alt>
+            </span>
           </div>
         </li>
         <li class="lis">
@@ -39,7 +42,8 @@
       <div class="imgBox">
         <cover-image src="https://h5.jinaup.com/product_img/1.jpg"/>
         <cover-image
-          src="https://jnup.oss-cn-beijing.aliyuncs.com/product/68daa860585aa974a8381be80531f49b.jpg"/>
+          src="https://jnup.oss-cn-beijing.aliyuncs.com/product/68daa860585aa974a8381be80531f49b.jpg"
+        />
         <cover-image src="https://h5.jinaup.com/product_img/2.jpg"/>
       </div>
     </div>
@@ -81,7 +85,7 @@ export default {
       padding: 5rpx 20rpx;
       display: flex;
       justify-content: space-between;
-      .ones { 
+      .ones {
         .price {
           color: #fc5d7b;
           font-size: 44rpx;
@@ -103,10 +107,10 @@ export default {
           margin-left: 10rpx;
         }
       }
-      .share{
+      .share {
         font-size: 24rpx;
         border: 2rpx solid #fc5d7b;
-        color:#fc5d7b;
+        color: #fc5d7b;
         padding: 6rpx 20rpx;
         height: 40rpx;
         line-height: 40rpx;
@@ -153,7 +157,6 @@ export default {
               width: 20rpx;
               height: 20rpx;
               margin-top: 20rpx;
-
             }
           }
         }
@@ -179,8 +182,8 @@ export default {
       flex: 1;
       background: linear-gradient(217deg, #f86367, #fb2579);
       color: #fff;
-      border-radius:0;
-      font-size: 36rpx; 
+      border-radius: 0;
+      font-size: 36rpx;
     }
   }
 }

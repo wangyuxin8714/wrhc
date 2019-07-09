@@ -95,7 +95,7 @@ export default {
       },
       jumpAttestation(){
          wx.navigateTo({
-            url:  "/pages/certification/main"
+            url:  "/pages/attestationView/main"
         })
       },
       showText(){

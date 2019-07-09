@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/classify/main",
     "pages/index/main",
     "pages/certification/main",
     "pages/search/main",

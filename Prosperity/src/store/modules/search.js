@@ -10,7 +10,6 @@ const getters = {
 const actions={
     async getsearchlist({commit},payload){
         let data=await getsearchlist(payload)
-        console.log("data",data.result)
         commit("getsearchlistlist",data.result)
     }   
 }

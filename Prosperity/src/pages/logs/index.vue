@@ -131,8 +131,8 @@ export default {
     img{
       width: 54px;
       height: 54px;
-      border-radius: 50%;
       margin: 20px;
+      border-radius: 50%;
     }
     div{
       margin: 22rpx 20rpx 0;

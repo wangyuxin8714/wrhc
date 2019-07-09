@@ -1,11 +1,21 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
-		"es6": false,
+		"urlCheck": false,
+		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"coverView": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -31,40 +41,80 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
-					"name": "个人中心",
+					"name": "首页",
 					"pathName": "pages/index/main",
+					"query": ""
+				},
+				{
+					"id": 10,
+					"name": "个人中心",
+					"pathName": "pages/logs/main",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "商品详情",
+					"pathName": "pages/CommodityDetails/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "我的订单",
-					"pathName": "pages/myOrder/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "订单详情",
-					"pathName": "pages/orderDetail/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
+					"id": 3,
 					"name": "实名认证",
 					"pathName": "pages/attestationView/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 9,
+					"name": "分享页面",
+					"pathName": "pages/sharingPages/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "我的订单",
+					"pathName": "pages/myOrder/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "专题页面",
+					"pathName": "pages/dissertation/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "订单详情",
+					"pathName": "pages/orderDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
 					"name": "添加地址",
 					"pathName": "pages/addAddress/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "搜索",
+					"pathName": "pages/search/main",
+					"query": ""
+				},
+				{
+					"id": 8,
+					"name": "提交订单",
+					"pathName": "pages/placeOrder/main",
+					"query": "",
 					"scene": null
 				}
 			]

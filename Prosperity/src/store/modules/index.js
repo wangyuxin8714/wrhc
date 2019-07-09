@@ -1,5 +1,6 @@
-﻿const state={
-    
+
+const state={
+    searchlist:[]
 }
 
 const getters = {
@@ -7,13 +8,11 @@ const getters = {
 }
 //异步
 const actions={
-    
-  
-    
+
 }
 //同步
 const mutations={
-    
+
 
 }
 

@@ -4,7 +4,7 @@ const state = {
   tabData: [],
   classData: [],
   classFlag: true,
-  goClassIndex:0//跳转到分类页面的下标
+  goClassIndex: 0 //跳转到分类页面的下标
 };
 
 const getters = {};
@@ -30,20 +30,19 @@ const actions = {
 const mutations = {
   getsTabs(state, payload) {
     state.tabData = [...payload];
-    console.log(state.tabData)
   },
-  goToClass(state,index) {
+  goToClass(state, index) {
     state.classFlag = false;
     state.goClassIndex = index;
     wx.navigateTo({
       url: "../../pages/classify/main"
     });
   },
-  gotoFirst(state){
+  gotoFirst(state) {
     state.classFlag = true;
     wx.switchTab({
-        url: "/pages/index/main"
-      });
+      url: "/pages/index/main"
+    });
   }
 };
 

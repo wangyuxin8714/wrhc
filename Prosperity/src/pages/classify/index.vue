@@ -54,11 +54,6 @@ export default {
   created() {},
   onShow() {
     this.getTabs();
-    // this.getClassData({
-    //   pageIndex: this.page,
-    //   cid: this.tabData[this.ind].cid,
-    //   sortType: 1
-    // });
   },
   //上拉加载数据
   onReachBottom() {

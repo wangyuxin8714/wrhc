@@ -4,7 +4,7 @@
       <div class="wrap_top_seach" @click="goSearch">
         <img src="../../../static/images/search.png"/>
       </div>
-      <TopTab />
+      <TopTab :flag="flag"/>
     </div>
     <div class="wrap_main">
       <div class="main_swiper">
@@ -55,7 +55,8 @@ export default {
       typeLeft: "left",
       typeTop: "top",
       titFlag: true,
-      page: 1      
+      page: 1,
+      flag:true      
     };
   },
 
@@ -96,6 +97,9 @@ export default {
   created() {
     this.getChooseList(this.page);
     this.getChooseGood();
+  },
+  onShow(){
+    this.flag=true
   },
   //上拉加载数据
   onReachBottom() {

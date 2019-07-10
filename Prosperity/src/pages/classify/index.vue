@@ -1,9 +1,9 @@
 <template>
   <div class="wrap">
-    <TopTab :ind="ind" @tabClick="tabChange"/>
+    <TopTab :flag="flag" :ind="ind" @tabClick="tabChange"/>
 
     <div v-if="tabData[ind]" class="top">
-      <dl v-for="(item,index) in tabData[ind].childs" :key="index">
+      <dl v-for="(item,index) in tabData[ind].childs" :key="index" @click="goClass(item)">
         <dt>
           <img :src="item.imgUrl" alt>
         </dt>
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       ind: 0,
-      page: 1
+      page: 1,
+      flag:false
     };
   },
   computed: {
@@ -41,9 +42,19 @@ export default {
       getTabs: "classify/getTabs",
       getClassData: "classify/getClassData"
     }),
+    goClass(item){
+      console.log(item)
+      this.$bus.$emit("cid",item.cid)
+      this.getClassData({
+        pageIndex: 1,
+        cid: item.cid,
+        sortType: 1
+      });
+    },
     tabChange(index) {
       this.ind = index;
       this.page = 1;
+      this.$bus.$emit("cid",this.tabData[this.ind].cid)
       this.getClassData({
         pageIndex: this.page,
         cid: this.tabData[this.ind].cid,
@@ -54,6 +65,8 @@ export default {
   created() {},
   onShow() {
     this.getTabs();
+    this.flag=false
+
   },
   //上拉加载数据
   onReachBottom() {

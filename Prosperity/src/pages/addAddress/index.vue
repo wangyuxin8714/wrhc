@@ -44,7 +44,7 @@
             </div>
         </div>
         <button @click="submit">保存</button>
-    </div>
+  </div>
 </template>
 <script>
 import {mapState,mapActions} from 'vuex'
@@ -76,13 +76,14 @@ export default {
         ...mapActions({
             addAddressActions:'address/addAddressActions'
         }),
+        changelabel(ind){
+          this.ind=ind
+        },
         bindRegionChange: function (e) {
             this.current.region=[...e.target.value];
             this.current.code=[...e.target.code]            
         },
-        changelabel(ind){
-            this.ind=ind
-        },
+        
         switchChange(e){
             this.current.state=e.target.value?1:0;
         },
@@ -129,7 +130,7 @@ export default {
                 areaName: this.current.region[2],
                 ...this.current
             });
-            // console.log('data...',data)
+            console.log('data...',data)
             if(data.res_code==1){
                   wx.showModal({
                     title: '温馨提示', //提示的标题,
@@ -144,122 +145,125 @@ export default {
                     }
                 })
             }
+        
         }
-    },
-}
+  },
+
+};
 </script>
 <style lang="scss" scoped>
-.addAddress{
-    width:100%;
-    height:100%;
-    display: flex;
-    flex-direction: column;
-    button{
-        width: 90%;
-        height: 100rpx;
-        background: #33d6c5;
-        border-radius: 14rpx;
-        color: #fff;
-        font-size: 36rpx;
-        margin-left: 5%;
-        margin-top: 120rpx;
-    }
+.addAddress {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  button {
+    width: 90%;
+    height: 100rpx;
+    background: #33d6c5;
+    border-radius: 14rpx;
+    color: #fff;
+    font-size: 36rpx;
+    margin-left: 5%;
+    margin-top: 120rpx;
+  }
 }
-.addTop{
-    width: 100%;
+.addTop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin-bottom: 20rpx;
+  div {
+    width: 702rpx;
+    height: 90rpx;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    background: #fff;
-    margin-bottom: 20rpx;
-    div{
-        width: 702rpx;
-        height: 90rpx;
-        margin: 0 auto;
-        display: flex;
-        line-height: 90rpx;
-        border-bottom: 2rpx solid #f6f6f6;
-        font-size: 28rpx;
-        input,picker{
-            flex: 1;
-            height: 90rpx;
-            padding-left: 10rpx;
-            width: 100%;
-        }
-        .iPhone{
-            margin-right: 10rpx;
-        }
-        span{
-            display: inline-block;
-            color: #9ca0a5;
-            img{
-                width: 10rpx;
-                height: 18rpx;
-            }
-        }
+    line-height: 90rpx;
+    border-bottom: 2rpx solid #f6f6f6;
+    font-size: 28rpx;
+    input,
+    picker {
+      flex: 1;
+      height: 90rpx;
+      padding-left: 10rpx;
+      width: 100%;
     }
-    .text{
-        height: 176rpx;
-        font-weight: 400;
-        line-height: 40rpx;
-        font-size: 28rpx;
-        border-bottom: 0;
-        textarea{
-            width: 616rpx;
-            height: 176rpx;
-            margin: 26rpx 10rpx;
-        }
+    .iPhone {
+      margin-right: 10rpx;
     }
+    span {
+      display: inline-block;
+      color: #9ca0a5;
+      img {
+        width: 10rpx;
+        height: 18rpx;
+      }
+    }
+  }
+  .text {
+    height: 176rpx;
+    font-weight: 400;
+    line-height: 40rpx;
+    font-size: 28rpx;
+    border-bottom: 0;
+    textarea {
+      width: 616rpx;
+      height: 176rpx;
+      margin: 26rpx 10rpx;
+    }
+  }
 }
-.addCenter{
-    width: 100%;
-    height: 286rpx;
-    background: #fff;
-    .label{
-        width: 702rpx;
-        margin: 0 auto;
-        border-bottom: 2rpx solid #f6f6f6;
-        p{
-            font-size: 28rpx;
-            font-weight: 400;
-            color: #323a45;
-            margin-left: 10rpx;
-            height: 62rpx;
-            line-height: 62rpx;
-        }
-        ul{
-            width: 702rpx;
-            height: 134rpx;
-            margin: 0 auto;
-            display: flex;
-            li{
-                width: 132rpx;
-                height: 52rpx;
-                border-radius: 300rpx;
-                margin: 2rpx 14rpx;
-                border: 2rpx solid #bbb;
-                font-size: 30rpx;
-                line-height: 52rpx;
-                text-align: center;
-                color: #323a45;
-                &.active{
-                    background: #33d6c5;
-                    color:#fff;
-                }
-            }
-        }
+.addCenter {
+  width: 100%;
+  height: 286rpx;
+  background: #fff;
+  .label {
+    width: 702rpx;
+    margin: 0 auto;
+    border-bottom: 2rpx solid #f6f6f6;
+    p {
+      font-size: 28rpx;
+      font-weight: 400;
+      color: #323a45;
+      margin-left: 10rpx;
+      height: 62rpx;
+      line-height: 62rpx;
     }
-    .switch{
-        display: flex;
-        width: 702rpx;
-        margin: 0 auto;
-        height: 90rpx;
-        line-height: 90rpx;
-        font-size: 28rpx;
-        justify-content: space-between;
-        p{
-            margin-left: 10rpx;
-            flex: 1;
+    ul {
+      width: 702rpx;
+      height: 134rpx;
+      margin: 0 auto;
+      display: flex;
+      li {
+        width: 132rpx;
+        height: 52rpx;
+        border-radius: 300rpx;
+        margin: 2rpx 14rpx;
+        border: 2rpx solid #bbb;
+        font-size: 30rpx;
+        line-height: 52rpx;
+        text-align: center;
+        color: #323a45;
+        &.active {
+          background: #33d6c5;
+          color: #fff;
         }
+      }
     }
+  }
+  .switch {
+    display: flex;
+    width: 702rpx;
+    margin: 0 auto;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    justify-content: space-between;
+    p {
+      margin-left: 10rpx;
+      flex: 1;
+    }
+  }
 }
 </style>

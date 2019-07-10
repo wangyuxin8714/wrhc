@@ -27,19 +27,13 @@ export default {
   log () {
     console.log(`log at:${Date.now()}`)
   
-  
-
   }
 
 }
 </script>
 
 <style>
-page{
-  width:100%;
-  height:100%;
-  background: #f3f7f7;
-}
+
 
 *{
   margin: 0;

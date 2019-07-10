@@ -34,7 +34,7 @@ const actions={
 const mutations={
     addressListMu(state, payload) {
         state.addressArr = [...payload];
-        console.log('res...',state.addressArr)
+        console.log('resres...',state.addressArr)
     },
 }
 

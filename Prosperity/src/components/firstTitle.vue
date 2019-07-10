@@ -1,8 +1,14 @@
 <template>
   <div class="title">
     <div class="title_left">
-      <span>精选好物</span>
-      <span>等你来抢</span>
+      <template v-if="titFlag">
+        <span>为你精选</span>
+        <span>等你来抢</span>
+      </template>
+      <template v-else>
+        <span>精选好物</span>
+        <span>等你来抢</span>
+      </template>
     </div>
     <div class="title_right">
       <cover-image class="title_img" src="/static/images/gd.png"/>
@@ -11,7 +17,7 @@
 </template>
 <script>
 export default {
-  props: {},
+  props: ["titFlag"],
   components: {},
   data() {
     return {};

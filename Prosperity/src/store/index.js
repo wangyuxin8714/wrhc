@@ -1,6 +1,7 @@
 import Vue from "vue"
-import Vuex, { mapMutations } from "vuex"
+import Vuex from "vuex"
 import createLogger from "vuex/dist/logger"
+
 
 Vue.use(Vuex)
 
@@ -10,6 +11,11 @@ import dissertation from "./modules/dissertation"
 import search from "./modules/search"
 import home from "./modules/home";
 import order from "./modules/order";
+
+import commodityDetails from "./modules/commodityDetails";
+
+import classify from "./modules/classify"
+
 
 
 Vue.use(Vuex);
@@ -21,7 +27,10 @@ export default new Vuex.Store({
         dissertation,
         search,
         home,
-        order
+        order,
+        commodityDetails,
+
+        classify
     },
     state:{
        

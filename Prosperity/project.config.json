@@ -63,7 +63,7 @@
 					"scene": null
 				},
 				{
-					"id": 3,
+					"id": 5,
 					"name": "实名认证",
 					"pathName": "pages/attestationView/main",
 					"query": "",
@@ -118,30 +118,36 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 11,
 					"name": "交易成功",
 					"pathName": "pages/transactionView/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 12,
 					"name": "推荐人",
 					"pathName": "pages/recommenderView/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 13,
 					"name": "绑定手机号",
 					"pathName": "pages/bindingiPhone/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "交易详情",
-					"pathName": "pages/transactionDetail/main",
+					"pathName": "pages/transactionDetail/main"
+				},
+				{
+					"id": 15,
+					"name": "分类页面",
+					"pathName": "pages/classify/main",
+					"query": "",
 					"scene": null
 				}
 			]

@@ -17,7 +17,7 @@
   </scroll-view>
 </template>
 <script>
-import { mapState, mapActions,mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default {
   props: ["list", "ind"],
   components: {},
@@ -27,7 +27,7 @@ export default {
   computed: {
     ...mapState({
       tabList: state => state.home.tabList,
-      classFlag:state => state.classify.classFlag
+      classFlag: state => state.classify.classFlag
     })
   },
   methods: {
@@ -35,14 +35,13 @@ export default {
       getTabList: "home/getTabList"
     }),
     ...mapMutations({
-      goToClass:"classify/goToClass",
-      gotoFirst:"classify/gotoFirst"
+      goToClass: "classify/goToClass",
+      gotoFirst: "classify/gotoFirst"
     })
   },
   created() {
     this.getTabList(0);
   },
-
   mounted() {}
 };
 </script>

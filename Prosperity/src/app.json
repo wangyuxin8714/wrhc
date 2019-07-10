@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/main",
     "pages/classify/main",
-
     "pages/search/main",
     "pages/dissertation/main",
     "pages/CommodityDetails/main",

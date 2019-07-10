@@ -1,9 +1,10 @@
-﻿﻿import { tabList, chooseTrue, chooseGood } from "../../services";
+﻿﻿import { tabList, chooseTrue, chooseGood ,personal} from "../../services";
 
 const state = {
   tabList: [],
   chooseList: [],
-  chooseGoodList: []
+  chooseGoodList: [],
+  personCode:0
 };
 
 const getters = {};
@@ -45,6 +46,11 @@ const actions = {
     });
     // console.log(res.result);
     commit("getChooseGoods", res.result);
+  },
+  async personal({commit},payload){
+    let res = await personal(payload);
+    console.log(res)
+    commit("person",res.res_code === 1 ? 1 :-1);
   }
 };
 //同步
@@ -54,6 +60,9 @@ const mutations = {
   },
   getChooseGoods(state, payload) {
     state.chooseGoodList = [...payload];
+  },
+  person(state,payload){
+    state.personCode = payload;
   }
 };
 

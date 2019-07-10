@@ -31,6 +31,7 @@ const mutations = {
   getsTabs(state, payload) {
     state.tabData = [...payload];
   },
+  //跳转到分类页面
   goToClass(state, index) {
     state.classFlag = false;
     state.goClassIndex = index;
@@ -38,6 +39,7 @@ const mutations = {
       url: "../../pages/classify/main"
     });
   },
+  //返回首页
   gotoFirst(state) {
     state.classFlag = true;
     wx.switchTab({

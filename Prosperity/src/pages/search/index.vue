@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" scroll-y @scroll="listscroll">
+  <div class="wrap" :scrollTop="scrollTop" @scrolltolower="lower" scroll-y @scroll="listscroll">
     <div class="header">
       <div class="search">
         <div class="search-bg">
@@ -14,13 +14,13 @@
             />
           </view>
         </div>
-        <div class="search-text">取消</div>
+        <div class="search-text" @click="cancel">取消</div>
       </div>
     </div>
     <main v-if="flag">
       <div class="history">
         <p>历史搜索</p>
-        <img src="../../../static/seek/del.png" alt />
+        <img @click="chose" src="../../../static/seek/del.png" alt />
       </div>
       <div class="choice">
         <span @click="golist(item)" v-for="(item,index) in history" :key="index">{{item}}</span>
@@ -40,7 +40,7 @@
           <span @click="updateprice('asc')">价格从低到高</span>
         </div>
         <div class="content">
-          <dl v-for="(item,index) in searchlist" :key="index">
+          <dl v-for="(item,index) in searchlist" :key="index" @click="gotocommodityDtails(item)">
             <dt>
               <span>
                 <img :src="item.mainImgUrl" alt />
@@ -64,7 +64,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState ,mapMutations} from "vuex";
 export default {
   props: {},
   components: {},
@@ -80,7 +80,8 @@ export default {
       queryWord: "",
       queryType: 0,
       querySort: "asc",
-      pageIndex: 1
+      pageIndex: 1,
+      scrollTop:-1
     };
   },
   computed: {
@@ -92,32 +93,52 @@ export default {
     ...mapActions({
       getsearchlist: "search/getsearchlist"
     }),
+    ...mapMutations({
+      gotocommodityDtails:"commodityDetails/gotocommodityDtails"
+    }),
+    chose(){
+      wx.removeStorageSync('history')
+      this.history=[]
+    },
+    cancel(){
+      this.flag=true
+      this.text=""
+      this.history = wx.getStorageSync("history");
+    },
     updateinput(e) {
       this.text = e.target.value;
+      if(!e.target.value){
+        this.flag=true
+      }
+      
     },
     submit() {
-      this.arr.push(this.text);
-      wx.setStorage({
-        key: "history",
-        data: this.arr
-      });
-      this.queryWord = this.text;
-      this.queryType = 0;
-      this.querySort = "asc";
-      this.pageIndex = 1;
-      this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
-      this.flag = false;
+      if(this.text){
+        this.arr.push(this.text);
+        wx.setStorage({
+          key: "history",
+          data: this.arr
+        });
+        this.queryWord = this.text;
+        this.queryType = 0;
+        this.querySort = "asc";
+        this.pageIndex = 1;
+        this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
+        this.flag = false;
+      }
     },
     golist(item) {
-      this.queryWord = item;
-      this.queryType = 0;
-      this.querySort = "asc";
-      this.pageIndex = 1;
-      this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
-      this.flag = false;
-      this.text = item;
+        this.queryWord = item;
+        this.queryType = 0;
+        this.querySort = "asc";
+        this.pageIndex = 1;
+        this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
+        this.flag = false;
+        this.text = item;
     },
     updateprices(sort) {
+      this.scrollTop=0;
+      this.scrollTop=-1;
       this.flags = !this.flags;
       this.queryType = 2;
       this.querySort = sort;
@@ -125,27 +146,33 @@ export default {
       this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
     },
     updateprice(sort) {
+      this.flags=false;
+      this.scrollTop=0;
+      this.scrollTop=-1;
       this.queryWord = this.text;
       this.queryType = 2;
       this.querySort = sort;
       this.pageIndex = 1;
       this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
     },
-    async updatenew() {
-
-      (this.queryWord = this.text),
-        (this.queryType = 1),
-        (this.querySort = "asc"),
-        (this.pageIndex = 1);
-      await this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
+    updatenew() {
+      this.scrollTop=0;
+      this.scrollTop=-1;
+      this.queryWord = this.text;
+      this.queryType = 1;
+      this.querySort = "asc";
+      this.pageIndex = 1;
+      this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex);
 
     },
     updateall() {
-      (this.queryWord = this.text),
-        (this.queryType = 0),
-        (this.querySort = "asc"),
-        (this.pageIndex = 1);
-        this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
+      this.scrollTop=0;
+      this.scrollTop=-1;
+      this.queryWord = this.text;
+      this.queryType = 0;
+      this.querySort = "asc";
+      this.pageIndex = 1;
+      this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
     },
     getlist(queryWord,queryType,querySort,pageIndex){
       this.getsearchlist({
@@ -156,17 +183,16 @@ export default {
       });
     },
     listscroll(e) {
-
+      this.flags=false;
       if (e.target.scrollTop > 68) {
         this.updateactive = true;
       } else {
         this.updateactive = false;
       }
-      console.log(e.target.scrollTop,".....",(236 * (this.searchlist.length / 2) - 509))
-      if (e.target.scrollTop > (236 * (this.searchlist.length / 2) - 509)) {
-        this.pageIndex++;
-        this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
-      }
+    },
+    lower(e){
+      this.pageIndex++;
+      this.getlist(this.queryWord,this.queryType,this.querySort,this.pageIndex)
     }
   },
 

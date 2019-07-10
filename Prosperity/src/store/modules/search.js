@@ -17,13 +17,11 @@ const actions={
 //同步
 const mutations={
     getsearchlistlist(state,payload){
-        console.log(payload)
         if(payload.index!==1){
             state.searchlist=[...state.searchlist,...payload.data]
         }else{
             state.searchlist=payload.data
         }
-        console.log(state.searchlist)
     }
 
 }

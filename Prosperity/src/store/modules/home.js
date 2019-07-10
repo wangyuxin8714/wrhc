@@ -16,18 +16,34 @@ const actions = {
     commit("getTabLists", res.result);
   },
   //获取为你精选好物
-  async getChooseList({ state }, params) {
+  async getChooseList({ commit }, params) {
     const res = await chooseTrue(params);
-    //上拉加载判断
-    if (params === 1) {
-      state.chooseList = res.result;
-    } else {
-      state.chooseList = [...state.chooseList, ...res.result];
-    }
+    commit("getChooseLists",{params,data:res.result})
+
+    
   },
   //获取精选好物数据
   async getChooseGood({ commit }) {
     const res = await chooseGood();
+    
+    // console.log(res.result);
+    commit("getChooseGoods", res);
+  }
+};
+//同步
+const mutations = {
+  getChooseLists(state,payload){
+    //上拉加载判断
+    if (payload.params === 1) {
+      state.chooseList = payload.data;
+    } else {
+      state.chooseList = [...state.chooseList, ...payload.data];
+    }
+  },
+  getTabLists(state, payload) {
+    state.tabList = [...payload];
+  },
+  getChooseGoods(state, res) {
     //过滤数据
     res.result = res.result.map((item, index) => {
       if (index > 2) {
@@ -43,17 +59,8 @@ const actions = {
       }
       return item;
     });
-    // console.log(res.result);
-    commit("getChooseGoods", res.result);
-  }
-};
-//同步
-const mutations = {
-  getTabLists(state, payload) {
-    state.tabList = [...payload];
-  },
-  getChooseGoods(state, payload) {
-    state.chooseGoodList = [...payload];
+
+    state.chooseGoodList = [...res.result];
   }
 };
 

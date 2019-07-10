@@ -16,22 +16,29 @@ const actions = {
     commit("getsTabs", res.result);
   },
   //获取tab切换数据
-  async getClassData({ state }, payload) {
+  async getClassData({ commit }, payload) {
     const res = await getClassData(payload);
-    //上拉加载判断
-    if (payload.pageIndex === 1) {
-      state.classData = res.result;
-    } else {
-      state.classData = [...state.classData, ...res.result];
-    }
+
+    commit("getclassDates",{index:payload.pageIndex,data:res.result})
+
+    
   }
 };
 //同步
 const mutations = {
+  getclassDates(state,payload){
+      //上拉加载判断
+    if (payload.index=== 1) {
+      state.classData = payload.data;
+    } else {
+      state.classData = [...state.classData, ...payload.data];
+    }
+  },
   getsTabs(state, payload) {
     state.tabData = [...payload];
   },
   goToClass(state, index) {
+    console.log(index)
     state.classFlag = false;
     state.goClassIndex = index;
     wx.navigateTo({

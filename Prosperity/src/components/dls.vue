@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="index%2===0">
-            <dl class="dl_x" v-for="(item,index) in list" :key="index">
+            <dl class="dl_x" v-for="(item,index) in list" :key="index" @click="gotocommodityDtails(item)">
                 <dt>
                     <img :src="item.mainImgUrl" alt="">
                 </dt> 
@@ -18,7 +18,7 @@
         </div>
         <div class="detail" v-else>
             <ul>
-                <li v-for="(item,index) in list" :key="index">
+                <li v-for="(item,index) in list" :key="index" @click="gotocommodityDtails(item)">
                     <img :src="item.mainImgUrl" alt="">
                     <div class="contents">{{item.title}}</div>
                     <div class="money">
@@ -34,6 +34,7 @@
     </div>
 </template>
 <script>
+import {mapMutations} from "vuex"
 export default {
     props:["list","index"],
     components:{
@@ -48,7 +49,9 @@ export default {
 
     },
     methods:{
-
+        ...mapMutations({
+            gotocommodityDtails:"commodityDetails/gotocommodityDtails"
+        }),
     },
     created(){
         },

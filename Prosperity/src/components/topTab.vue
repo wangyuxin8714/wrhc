@@ -1,8 +1,8 @@
 <template>
   <scroll-view class="ul" scroll-x="true">
-    <template v-if="classFlag">
+    <template v-if="flag">
       <p :class="{active:classFlag}">今日推荐</p>
-      <p v-for="(item,index) in tabList" :key="index" @click="()=>goToClass(index)">{{item.cname}}</p>
+      <p v-for="(item,index) in tabList" :key="index" @click="goClass(index,item)">{{item.cname}}</p>
     </template>
 
     <template v-else>
@@ -19,7 +19,7 @@
 <script>
 import { mapState, mapActions,mapMutations } from "vuex";
 export default {
-  props: ["list", "ind"],
+  props: ["list", "ind","flag"],
   components: {},
   data() {
     return {};
@@ -32,18 +32,30 @@ export default {
   },
   methods: {
     ...mapActions({
-      getTabList: "home/getTabList"
+      getTabList: "home/getTabList",
+      getClassData: "classify/getClassData"
     }),
     ...mapMutations({
       goToClass:"classify/goToClass",
       gotoFirst:"classify/gotoFirst"
-    })
+    }),
+    goClass(index,item){
+      this.$bus.$emit("cid",item.cid)
+      this.getClassData({
+        pageIndex: 1,
+        cid: item.cid,
+        sortType: 1
+      });
+      this.goToClass(index)
+    }
   },
   created() {
     this.getTabList(0);
   },
 
-  mounted() {}
+  mounted() {
+
+  }
 };
 </script>
 <style scoped lang="scss">

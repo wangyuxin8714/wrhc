@@ -1,16 +1,16 @@
 <template>
   <main>
     <div class="nav">
-      <span>综合</span>
-      <span>最新</span>
-      <span>
+      <span @click="taball">综合</span>
+      <span @click="tabnew">最新</span>
+      <span @click="tabprice">
         价格
         <b :class="sortType===3?'rizeActive':'rise'"></b>
         <b :class="sortType===4?'dropActive':'drop'"></b>
       </span>
     </div>
     <div class="content">
-      <dl v-for="(item,index) in classData" :key="index">
+      <dl v-for="(item,index) in classData" :key="index" @click="gotocommodityDtails(item)">
         <dt>
           <img :src="item.mainImgUrl" alt>
         </dt>
@@ -31,17 +31,54 @@
   </main>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState,mapMutations, mapActions } from "vuex";
 export default {
   props: ["classData"],
   components: {},
   data() {
-    return {};
+    return {
+      cid:0,
+      sortType:3
+    };
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapMutations({
+      gotocommodityDtails:"commodityDetails/gotocommodityDtails"
+    }),
+    ...mapActions({
+      getClassData: "classify/getClassData"
+    }),
+    
+    taball(){
+      this.getClassData({
+        pageIndex: 1,
+        cid: this.cid,
+        sortType: 1
+      });
+    },
+    tabnew(){
+      this.getClassData({
+        pageIndex: 1,
+        cid: this.cid,
+        sortType: 2
+      });
+    },
+    tabprice(){
+      this.sortType=this.sortType===3?4:3
+      this.getClassData({
+        pageIndex: 1,
+        cid: this.cid,
+        sortType: this.sortType
+      });
+    }
+  },
   created() {},
-  mounted() {}
+  mounted() {
+    this.$bus.$on("cid",cid=>{
+      this.cid=cid
+    })
+  }
 };
 </script>
 <style scoped lang="scss">

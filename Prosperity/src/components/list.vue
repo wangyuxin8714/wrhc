@@ -2,7 +2,7 @@
   <div>
     <!-- 上下结构 -->
     <template v-if="types==='top'">
-      <dl class="top" v-for="(item,index) in goodList" :key="index">
+      <dl class="top" v-for="(item,index) in goodList" :key="index" @click="gotocommodityDtails(item.jumpUrl)">
         <dt>
           <img class="img" :src="item.imgUrl" />
         </dt>

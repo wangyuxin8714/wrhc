@@ -120,6 +120,12 @@ export default {
           icon: 'none'
         })
       }
+    },
+    onLoad(){
+      this.orderActions({
+          pageIndex:1,
+          orderStatus:0
+      })
     }
 }
 </script>

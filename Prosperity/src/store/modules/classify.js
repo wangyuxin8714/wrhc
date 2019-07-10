@@ -18,17 +18,14 @@ const actions = {
   //获取tab切换数据
   async getClassData({ commit }, payload) {
     const res = await getClassData(payload);
-
-    commit("getclassDates",{index:payload.pageIndex,data:res.result})
-
-    
+    commit("getclassDates", { index: payload.pageIndex, data: res.result });
   }
 };
 //同步
 const mutations = {
-  getclassDates(state,payload){
-      //上拉加载判断
-    if (payload.index=== 1) {
+  getclassDates(state, payload) {
+    //上拉加载判断
+    if (payload.index === 1) {
       state.classData = payload.data;
     } else {
       state.classData = [...state.classData, ...payload.data];
@@ -39,7 +36,6 @@ const mutations = {
   },
   //跳转到分类页面
   goToClass(state, index) {
-    console.log(index)
     state.classFlag = false;
     state.goClassIndex = index;
     wx.navigateTo({
@@ -52,6 +48,10 @@ const mutations = {
     wx.switchTab({
       url: "/pages/index/main"
     });
+  },
+  //改变下标index
+  changeIndex(state, index) {
+    state.goClassIndex = index;
   }
 };
 

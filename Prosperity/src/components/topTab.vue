@@ -10,7 +10,7 @@
       <p
         v-for="(item,index) in tabList"
         :key="index"
-        :class="{active:index===ind}"
+        :class="{active:index===goClassIndex}"
         @click="$emit('tabClick',index)"
       >{{item.cname}}</p>
     </template>
@@ -19,7 +19,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
-  props: ["list", "ind", "flag"],
+  props: ["list", "flag"],
   components: {},
   data() {
     return {};
@@ -27,7 +27,8 @@ export default {
   computed: {
     ...mapState({
       tabList: state => state.home.tabList,
-      classFlag: state => state.classify.classFlag
+      classFlag: state => state.classify.classFlag,
+      goClassIndex: state => state.classify.goClassIndex
     })
   },
   methods: {

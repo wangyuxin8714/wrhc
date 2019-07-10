@@ -2,8 +2,8 @@
   <div class="wrap">
     <TopTab :flag="flag" :ind="ind" @tabClick="tabChange"/>
 
-    <div v-if="tabData[ind]" class="top">
-      <dl v-for="(item,index) in tabData[ind].childs" :key="index" @click="goClass(item)">
+    <div v-if="tabData[goClassIndex]" class="top">
+      <dl v-for="(item,index) in tabData[goClassIndex].childs" :key="index" @click="goClass(item)">
         <dt>
           <img :src="item.imgUrl" alt>
         </dt>
@@ -19,15 +19,14 @@
 <script>
 import TopTab from "../../components/topTab";
 import ChooseTab from "../../components/chooseTab";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   props: {},
   components: { TopTab, ChooseTab },
   data() {
     return {
-      ind: 0,
       page: 1,
-      flag:false
+      flag: false
     };
   },
   computed: {
@@ -42,9 +41,11 @@ export default {
       getTabs: "classify/getTabs",
       getClassData: "classify/getClassData"
     }),
-    goClass(item){
-      console.log(item)
-      this.$bus.$emit("cid",item.cid)
+    ...mapMutations({
+      changeIndex: "classify/changeIndex"
+    }),
+    goClass(item) {
+      this.$bus.$emit("cid", item.cid);
       this.getClassData({
         pageIndex: 1,
         cid: item.cid,
@@ -52,12 +53,12 @@ export default {
       });
     },
     tabChange(index) {
-      this.ind = index;
+      this.changeIndex(index);
       this.page = 1;
-      this.$bus.$emit("cid",this.tabData[this.ind].cid)
+      this.$bus.$emit("cid", this.tabData[this.goClassIndex].cid);
       this.getClassData({
         pageIndex: this.page,
-        cid: this.tabData[this.ind].cid,
+        cid: this.tabData[this.goClassIndex].cid,
         sortType: 1
       });
     }
@@ -65,8 +66,7 @@ export default {
   created() {},
   onShow() {
     this.getTabs();
-    this.flag=false
-
+    this.flag = false;
   },
   //上拉加载数据
   onReachBottom() {
@@ -79,7 +79,7 @@ export default {
       this.page = this.page + 1;
       this.getClassData({
         pageIndex: this.page,
-        cid: this.tabData[this.ind].cid,
+        cid: this.tabData[this.goClassIndex].cid,
         sortType: 1
       });
     }

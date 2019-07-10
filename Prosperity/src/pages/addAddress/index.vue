@@ -130,7 +130,7 @@ export default {
                 areaName: this.current.region[2],
                 ...this.current
             });
-            console.log('data...',data)
+            // console.log('data...',data)
             if(data.res_code==1){
                   wx.showModal({
                     title: '温馨提示', //提示的标题,
@@ -157,6 +157,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: #f3f7f7;
   button {
     width: 90%;
     height: 100rpx;

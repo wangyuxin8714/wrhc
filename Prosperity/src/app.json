@@ -19,7 +19,8 @@
     "pages/transactionView/main",   
     "pages/recommenderView/main",
     "pages/bindingiPhone/main",
-    "pages/transactionDetail/main"
+    "pages/transactionDetail/main",
+    "pages/settlementView/main"
   ],
   "window": {
     "backgroundTextStyle": "dark",

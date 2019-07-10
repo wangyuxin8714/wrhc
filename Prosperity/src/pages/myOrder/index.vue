@@ -5,11 +5,11 @@
         </div>
         <div class="orderMain" v-if="orderArr">
             <div class="orderList" v-for="(item,index) in orderArr" :key='index'>
-                <p  @click='jump'>
+                <p  @click='jump(index)'>
                     <span>{{item.createTime}}</span>
                     <span>{{item.status}}</span>
                 </p>
-                <dl @click='jumpDetail'>
+                <dl @click='jumpDetail()'>
                     <dt>
                         <img :src="item.products[0].mainImgUrl" alt="">
                     </dt>
@@ -24,8 +24,12 @@
                         </p>
                     </dd>
                 </dl>
-                <div  @click='jump'>
-                  <p> 共1件商品 合计:<span>￥39</span></p>
+                <div @click='jump(index)'>
+                  <p> 共1件商品 合计:<span>￥{{item.totalAmount}}</span></p>
+                  <div class="cancel" v-if="item.cancleStatus==0">
+                    <button @click.stop='cancel(index)'>取消订单</button>
+                    <button>去付款</button>
+                  </div>
                 </div>
             </div>
         </div>
@@ -63,21 +67,45 @@ export default {
         orderArr:state=>state.order.orderList
       })
     },
+    onLoad(option){
+      this.ind=option.id
+    },
     methods: {
         ...mapActions({
-            orderActions:'order/orderActions'
+            orderActions:'order/orderActions',
+            orderDetailActions:'order/orderDetailActions'
         }),
-        changeInd(ind){
-            this.ind=ind;
-            this.orderActions({
+        async changeInd(ind){
+            let data=await this.orderActions({
               pageIndex:1,
-              orderStatus:this.ind
+              orderStatus:ind
+            })
+            this.ind=ind;
+        },
+        cancel(index){
+           wx.showModal({
+                title: '温馨提示', //提示的标题,
+                content: '是否取消订单?', //提示的内容,
+                showCancel: true,
+                confirmText: '确定', //确定按钮的文字，默认为取消，最多 4 个字符,
+                confirmColor: '#197DBF', //确定按钮的文字颜色,
+                success: res => {
+                  if(res.confirm){
+                    this.orderArr[index].cancleStatus=0
+                  }
+                }
             })
         },
-        jump(){
-            wx.navigateTo({
-                url:  "/pages/orderDetail/main"
-            })
+        async jump(index){
+          let data=await this.orderDetailActions({
+                orderType:this.orderArr[index].orderType,
+                orderId:this.orderArr[index].orderId
+          })
+          if(data.res_code==1){
+              wx.navigateTo({
+                  url:  "/pages/orderDetail/main"
+              })
+          }
         },
         jumpDetail(){
             wx.navigateTo({
@@ -85,30 +113,12 @@ export default {
             })
         }
     },
-    onLoad(option){
-        this.ind=option.id;
-    },
     onShow(){
-        this.orderActions({
-          pageIndex:1,
-          orderStatus:this.ind
+       this.ind=0;
+       this.orderActions({
+            pageIndex:1,
+            orderStatus:0
         })
-        // if(data.res_code==1){
-        //     wx.showModal({
-        //       title: '温馨提示', //提示的标题,
-        //       content: data.message, //提示的内容,
-        //       showCancel: false,
-        //       confirmText: '确定', //确定按钮的文字，默认为取消，最多 4 个字符,
-        //       confirmColor: '#197DBF', //确定按钮的文字颜色,
-        //       success: res => {
-        //           if (res.confirm) {
-        //             wx.navigateTo({
-        //               url:  "/pages/myOrder/main"
-        //             })
-        //           }
-        //       }
-        //   })
-        // }
     }
 }
 </script>
@@ -116,6 +126,7 @@ export default {
 .myOrder {
   width: 100%;
   height: 100%;
+  background: #f3f7f7;
 }
 .orderTab {
   width: 100%;
@@ -216,6 +227,21 @@ export default {
       font-size: 26rpx;
       color: #484848;
       margin-right: 15px;
+    }
+    .cancel{
+      height: 60rpx;
+      display: flex;
+      button{
+        font-size: 28rpx;
+        line-height: 60rpx;
+        padding: 0 10rpx;
+        margin-right: 6px;
+        background: #fff;
+        &:last-child{
+          background: #fc5d7b;
+          color: #fff;
+        }
+      }
     }
   }
 }

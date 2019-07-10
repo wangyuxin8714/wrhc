@@ -16,6 +16,7 @@
           <div>
               <dl @click='jumpOrder(1)'>
                 <dt>
+                  <span class="num">{{num}}</span>
                   <img src="/../static/images/dfk.png" alt="">
                 </dt>
                 <dd>
@@ -76,15 +77,27 @@
   </div>
 </template>
 <script>
+import {mapState,mapActions} from 'vuex'
 export default {
     computed: {
-    
+      ...mapState({
+        num:state=>state.order.num
+      })
     },
     methods: {
-      jumpOrder(id){
-          wx.navigateTo({
-            url:  "/pages/myOrder/main?id="+id
+      ...mapActions({
+          orderActions:'order/orderActions'
+      }),
+      async jumpOrder(id){
+          let data=await this.orderActions({
+              pageIndex:1,
+              orderStatus:id
           })
+          if(data.res_code==1||data.res_code==1004){
+              wx.navigateTo({
+                url:  "/pages/myOrder/main?id="+id
+              })
+          }
       },
       jumpCoupon(){
         wx.navigateTo({
@@ -115,6 +128,7 @@ export default {
   width:100%;
   height:100%;
   position: fixed;
+  background: #f3f7f7;
 }
 .myHeader{
   width: 100%;
@@ -185,9 +199,24 @@ export default {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          position: relative;
           img{
             width:34px;
             height:34px;
+          }
+          .num{
+            position: absolute;
+            left: 60rpx;
+            top: -10rpx;
+            padding: 2rpx;
+            font-size: 24rpx;
+            border: 2rpx solid #fc5d7b;
+            border-radius: 50%;
+            color: #fc5d7b;
+            width: 30rpx;
+            height: 30rpx;
+            text-align: center;
+            line-height: 30rpx;
           }
           dd{
             font-size: 24rpx;

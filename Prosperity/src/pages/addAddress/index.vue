@@ -2,16 +2,16 @@
   <div class="addAddress">
     <div class="addTop">
       <div>
-        <input type="text" placeholder="收货人" v-model="current.consignee" />
+        <input type="text" placeholder="收货人" v-model="current.consignee">
         <span>
-          <img src="/../static/images/lt.svg" alt />
+          <img src="/../static/images/lt.svg" alt>
         </span>
       </div>
       <div>
-        <input type="text" placeholder="手机号" v-model="current.consigneePhone" maxlength="11" />
+        <input type="text" placeholder="手机号" v-model="current.consigneePhone" maxlength="11">
         <span>
           <span class="iPhone">+86</span>
-          <img src="/../static/images/lt.svg" alt />
+          <img src="/../static/images/lt.svg" alt>
         </span>
       </div>
       <div>
@@ -22,7 +22,7 @@
           </view>
         </picker>
         <span>
-          <img src="/../static/images/lt.svg" alt />
+          <img src="/../static/images/lt.svg" alt>
         </span>
       </div>
       <div class="text">
@@ -43,7 +43,7 @@
       </div>
       <div class="switch">
         <p>设置默认地址</p>
-        <switch @change="switchChange" />
+        <switch @change="switchChange"/>
       </div>
     </div>
     <button @click="submit">保存</button>

@@ -1,9 +1,10 @@
-﻿﻿import { tabList, chooseTrue, chooseGood } from "../../services";
+﻿﻿import { tabList, chooseTrue, chooseGood, personal } from "../../services";
 
 const state = {
   tabList: [],
   chooseList: [],
-  chooseGoodList: []
+  chooseGoodList: [],
+  personCode: 0
 };
 
 const getters = {};
@@ -18,21 +19,23 @@ const actions = {
   //获取为你精选好物
   async getChooseList({ commit }, params) {
     const res = await chooseTrue(params);
-    commit("getChooseLists",{params,data:res.result})
-
-    
+    commit("getChooseLists", { params, data: res.result });
   },
   //获取精选好物数据
   async getChooseGood({ commit }) {
     const res = await chooseGood();
-    
     // console.log(res.result);
     commit("getChooseGoods", res);
+  },
+  //实名认证
+  async personal({ commit }, payload) {
+    let res = await personal(payload);
+    commit("person", res.res_code === 1 ? 1 : -1);
   }
 };
 //同步
 const mutations = {
-  getChooseLists(state,payload){
+  getChooseLists(state, payload) {
     //上拉加载判断
     if (payload.params === 1) {
       state.chooseList = payload.data;
@@ -42,6 +45,9 @@ const mutations = {
   },
   getTabLists(state, payload) {
     state.tabList = [...payload];
+  },
+  person(state, payload) {
+    state.personCode = payload;
   },
   getChooseGoods(state, res) {
     //过滤数据
@@ -59,7 +65,6 @@ const mutations = {
       }
       return item;
     });
-
     state.chooseGoodList = [...res.result];
   }
 };

@@ -44,7 +44,7 @@ export default {
 <style scoped lang="scss">
 .swiper {
   width: 100%;
-  height: 39.5vw;
+  height: 100%;
   box-sizing: border-box;
 }
 .swiperItem {

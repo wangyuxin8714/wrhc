@@ -1,14 +1,14 @@
 <template>
   <div class="attestation">
-    <form bindsubmit="formSubmit" bindreset="formReset">
+    <form @submit="formSubmit" report-submit="true">
       <ul class="user">
         <li>
           <span>真实姓名</span>
-          <input type="text">
+          <input type="text" name="nameVal">
         </li>
         <li>
           <span>身份证号</span>
-          <input type="text">
+          <input type="text" name="personVal">
         </li>
       </ul>
       <div class="upload">
@@ -17,11 +17,11 @@
           <span>(图片png、jpg,大小不超过5M)</span>
         </p>
         <div>
-          <div @click='uploadFile'>
-            <img  src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg" alt="">
+          <div @click="uploadFile">
+            <img :src="imgSrc[0]" alt>
           </div>
-          <div @click='uploadFile'>
-            <img  src="https://jnup.oss-cn-beijing.aliyuncs.com/user/2c40e60ccb312858c40533738906e830.jpg" alt="">
+          <div @click="uploadFiles">
+            <img :src="imgSrcs[0]" alt>
           </div>
         </div>
       </div>
@@ -43,18 +43,102 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
-   methods: {
-     uploadFile(){
-      //  wx.getFileInfo({
-      //     success (res) {
-      //       console.log('res.size......',res)
-      //       // console.log(res.digest)
-      //     }
-      //   })
-     }
-   },
-}
+  data() {
+    return {
+      imgSrc: [],
+      imgSrcs: [],
+      baseImg1: "",
+      baseImg2: ""
+    };
+  },
+  computed: {
+    ...mapState({
+      personCode: state => state.home.personCode
+    })
+  },
+  methods: {
+    ...mapActions({
+      personal: "home/personal"
+    }),
+    //点击第一个上传图片
+    uploadFile(e) {
+      const that = this;
+      wx.chooseImage({
+        count: 1,
+        sizeType: ["original", "compressed"],
+        sourceType: ["album", "camera"],
+        success(res) {
+          // tempFilePath可以作为img标签的src属性显示图片
+          that.imgSrc = res.tempFilePaths;
+          wx.getFileSystemManager().readFile({
+            filePath: res.tempFilePaths[0],
+            encoding: "base64",
+            success: function(data) {
+              that.baseImg1 = "data:image/jpg;base64," + data.data;
+            }
+          });
+        }
+      });
+    },
+    //点击第二个上传图片
+    uploadFiles(e) {
+      const that = this;
+      wx.chooseImage({
+        count: 1,
+        sizeType: ["original", "compressed"],
+        sourceType: ["album", "camera"],
+        success(res) {
+          // tempFilePath可以作为img标签的src属性显示图片
+          that.imgSrcs = res.tempFilePaths;
+          wx.getFileSystemManager().readFile({
+            filePath: res.tempFilePaths[0],
+            encoding: "base64",
+            success: function(data) {
+              that.baseImg2 = "data:image/jpg;base64," + data.data;
+            }
+          });
+        }
+      });
+    },
+    async formSubmit(e) {
+      const { nameVal, personVal } = e.target.value;
+      if (nameVal === "" && !/^[\u4E00-\u9FA5]{2,4}$/.test(nameVal)) {
+        wx.showToast({
+          title: "请输入真实姓名", //提示的内容,
+          icon: "none" //图标,
+        });
+        return false;
+      }
+      if (
+        personVal === "" &&
+        !/^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(
+          personVal
+        )
+      ) {
+        wx.showToast({
+          title: "请输入身份证号", //提示的内容,
+          icon: "none" //图标,
+        });
+        return false;
+      }
+      await this.personal({
+        id_img_positive: this.baseImg1,
+        id_img_opposite: this.baseImg2,
+        trueName: nameVal,
+        idNumber: personVal
+      });
+      if (this.personCode === 1) {
+        wx.showToast({
+          title: "成功", //提示的内容,
+          icon: "success" //图标,
+        });
+      }
+    }
+  },
+  created() {}
+};
 </script>
 <style lang="scss" scoped>
 .attestation {
@@ -113,7 +197,7 @@ export default {
         color: #999da2;
       }
     }
-    > div {
+    & > div {
       display: flex;
       box-sizing: border-box;
       justify-content: center;
@@ -123,6 +207,11 @@ export default {
         height: 220rpx;
         border-radius: 10rpx;
         border: 1rpx dashed #64e1d3;
+        input {
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+        }
         img {
           height: 100%;
           width: 100%;

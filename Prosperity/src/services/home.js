@@ -15,3 +15,8 @@ export let chooseTrue = data => {
 export let chooseGood = () => {
   return request.post("/api/open/page/home/list/1.0.0");
 };
+
+//实名认证
+export let personal = payload => {
+  return request.post("/api/open/user/auth/editBase64/1.0.0",payload)
+};

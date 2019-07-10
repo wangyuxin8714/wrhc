@@ -20,6 +20,7 @@
   height:100%;
   display: flex;
   flex-direction: column;
+  background: #f3f7f7;
   ul{
     height: 180rpx;
     width: 100%;

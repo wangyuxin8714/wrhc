@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 16,
 			"list": [
 				{
 					"id": 0,
@@ -141,13 +141,20 @@
 				{
 					"id": 14,
 					"name": "交易详情",
-					"pathName": "pages/transactionDetail/main"
+					"pathName": "pages/transactionDetail/main",
+					"query": ""
 				},
 				{
 					"id": 15,
 					"name": "分类页面",
 					"pathName": "pages/classify/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "订单列表",
+					"pathName": "pages/myOrder/main",
 					"scene": null
 				}
 			]

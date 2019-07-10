@@ -1,79 +1,89 @@
 <template>
-  <div class="addAddress">
-    <div class="addTop">
-      <div>
-        <input type="text" placeholder="收货人" v-model="current.consignee">
-        <span>
-          <img src="/../static/images/lt.svg" alt>
-        </span>
-      </div>
-      <div>
-        <input type="text" placeholder="手机号" v-model="current.consigneePhone" maxlength="11">
-        <span>
-          <span class="iPhone">+86</span>
-          <img src="/../static/images/lt.svg" alt>
-        </span>
-      </div>
-      <div>
-        <picker mode="region" @change="bindRegionChange" v-model="current.region">
-          <view class="picker">
-            <span v-if="!current.region.length">所在地区</span>
-            <span v-else>{{current.region[0]}}，{{current.region[1]}}，{{current.region[2]}}</span>
-          </view>
-        </picker>
-        <span>
-          <img src="/../static/images/lt.svg" alt>
-        </span>
-      </div>
-      <div class="text">
-        <textarea placeholder="详细地址：如道路、门牌号、小区、楼栋号、单元 室等" v-model="current.address"></textarea>
-      </div>
-    </div>
-    <div class="addCenter">
-      <div class="label">
-        <p>标签</p>
-        <ul>
-          <li
-            v-for="(item,index) in labelList"
-            :key="index"
-            :class="{'active':index==ind}"
-            @click="changelabel(index)"
-          >{{item.title}}</li>
-        </ul>
-      </div>
-      <div class="switch">
-        <p>设置默认地址</p>
-        <switch @change="switchChange"/>
-      </div>
-    </div>
-    <button @click="submit">保存</button>
+    <div class='addAddress'>
+        <div class="addTop">
+            <div>
+                <input type="text" placeholder="收货人" v-model="current.consignee">
+                <span>
+                    <img src="/../static/images/lt.svg" alt="">
+                </span>
+            </div>
+            <div>
+                <input type="text" placeholder="手机号" v-model="current.consigneePhone"  maxlength="11">
+                <span>
+                    <span class="iPhone">+86</span>
+                    <img src="/../static/images/lt.svg" alt="">
+                </span>
+            </div>
+            <div>
+                <picker mode="region" @change="bindRegionChange" v-model="current.region">
+                    <view class="picker">
+                      <span v-if='!current.region.length'>所在地区</span>
+                      <span v-else>{{current.region[0]}}，{{current.region[1]}}，{{current.region[2]}}</span>
+                    </view>
+                </picker>
+                <span>
+                    <img src="/../static/images/lt.svg" alt="">
+                </span>
+            </div>
+            <div class="text">
+                <textarea placeholder="详细地址：如道路、门牌号、小区、楼栋号、单元 室等" v-model="current.address"></textarea>
+            </div>
+        </div>
+        <div class="addCenter">
+            <div class="label">
+                <p>标签</p>
+                <ul>
+                    <li v-for="(item,index) in labelList" :key='index' :class="{'active':index==ind}" @click='changelabel(index)'>{{item.title}}</li>
+                </ul>
+            </div>
+            <div class="switch">
+                <p>
+                    设置默认地址
+                </p>
+                 <switch @change="switchChange"/>
+            </div>
+        </div>
+        <button @click="submit">保存</button>
   </div>
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  data() {
-    return {
-      labelList: [
-        {
-          title: "家",
-          id: 0
-        },
-        {
-          title: "公司",
-          id: 1
-        },
-        {
-          title: "学校",
-          id: 2
-        },
-        {
-          title: "其他",
-          id: 3
+    data(){
+        return {
+            labelList:[{
+                title:'家',
+                id:0
+            },{
+                title:'公司',
+                id:1
+            },{
+                title:'学校',
+                id:2
+            },{
+                title:'其他',
+                id:3
+            }],
+            ind:null
         }
-      ],
-      ind: null
-    };
+    },
+    computed: {
+         ...mapState({
+           current: state=>state.address.current
+        }),
+    },
+    methods: {
+        ...mapActions({
+            addAddressActions:'address/addAddressActions'
+        }),
+        changelabel(ind){
+          this.ind=ind
+        },
+        bindRegionChange: function (e) {
+            this.current.region=[...e.target.value];
+            this.current.code=[...e.target.code]            
+        },
+        
   },
   computed: {
     ...mapState({
@@ -165,6 +175,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: #f3f7f7;
   button {
     width: 90%;
     height: 100rpx;

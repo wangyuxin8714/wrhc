@@ -146,6 +146,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: #f3f7f7;
   .user {
     border-bottom: 1rpx solid #eee;
     background: #fff;

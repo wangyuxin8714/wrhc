@@ -42,6 +42,7 @@ export default {
 .coupon {
   width: 100%;
   height: 100%;
+  background: #f3f7f7;
   .orderTab {
     width: 100%;
     height: 34px;

@@ -110,7 +110,7 @@ export default {
         })
       },
       jumpAttestation(){
-         wx.navigateTo({
+         wx.navigateTo({ 
             url:  "/pages/attestationView/main"
         })
       },
@@ -120,6 +120,12 @@ export default {
           icon: 'none'
         })
       }
+    },
+    onShow(){
+      this.orderActions({
+          pageIndex:1,
+          orderStatus:0
+      })
     }
 }
 </script>

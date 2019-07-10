@@ -108,6 +108,12 @@ export default {
 };
 </script>
 <style  scoped lang="scss">
+.wop-swiper{
+  height: 244px;
+  >div{
+    height: 100%;
+  }
+}
 .detailBox {
   width: 100%;
   height: 100%;

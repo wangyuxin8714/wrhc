@@ -23,13 +23,13 @@ const actions={
     //获取订单列表
     async orderActions({commit},payload){
         let data=await orderFn(payload)
+        console.log('data...',data)
         if(data.result==null){
             state.orderList=null;
             return data
         }
         state.orderList=mapArr(data.result);
         state.num=data.result.filter(item=>item.cancleStatus==0).length;
-        console.log('state.num...',state.orderList)
         return data
     },
     //获取订单详情

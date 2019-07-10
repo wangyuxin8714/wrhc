@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div class="myOrder">
         <div class="orderTab">
             <span v-for="(item,index) in orderList" :key='index'  :class="{'active':index==ind}" @click='changeInd(index)'>{{item.title}}</span>
@@ -35,58 +34,12 @@
                 <img src="/../static/images/wudingdan.png" alt="">
                 <p>暂时没有订单噢~</p>
             </div>
-=======
-  <div class="myOrder">
-    <div class="orderTab">
-      <span
-        v-for="(item,index) in orderList"
-        :key="index"
-        :class="{'active':index==ind}"
-      >{{item.title}}</span>
-    </div>
-    <div class="orderMain">
-      <div class="orderList">
-        <p @click="jump">
-          <span>2019-07-08 10:10:10</span>
-          <span>已取消</span>
-        </p>
-        <dl>
-          <dt>
-            <img
-              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png"
-              alt
-            >
-          </dt>
-          <dd>
-            <h5>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h5>
-            <h6>规格:默认</h6>
-            <p>
-              <span>￥39</span>
-              <span>x1</span>
-            </p>
-          </dd>
-        </dl>
-        <div @click="jump">
-          <p>
-            共1件商品 合计:
-            <span>￥39</span>
-          </p>
->>>>>>> srr
         </div>
-      </div>
     </div>
-    <div class="orderNull" v-if="null">
-      <div>
-        <img src="/../static/images/wudingdan.png" alt>
-        <p>暂时没有订单噢~</p>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 import {mapState,mapActions} from 'vuex'
 export default {
-<<<<<<< HEAD
     data(){
         return {
             orderList:[{
@@ -154,39 +107,6 @@ export default {
         // }
     }
 }
-=======
-  data() {
-    return {
-      orderList: [
-        {
-          title: "全部",
-          id: 0
-        },
-        {
-          title: "待付款",
-          id: 1
-        },
-        {
-          title: "待发货",
-          id: 2
-        },
-        {
-          title: "待收货",
-          id: 3
-        }
-      ],
-      ind: 0
-    };
-  },
-  methods: {
-    jump() {
-      wx.navigateTo({
-        url: "/pages/orderDetail/main"
-      });
-    }
-  }
-};
->>>>>>> srr
 </script>
 <style lang="scss" scoped>
 .myOrder {

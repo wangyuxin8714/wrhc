@@ -28,6 +28,7 @@ const actions = {
   //获取精选好物数据
   async getChooseGood({ commit }) {
     const res = await chooseGood();
+    console.log("精选好物...",res)
     //过滤数据
     res.result = res.result.map((item, index) => {
       if (index > 2) {
@@ -43,7 +44,6 @@ const actions = {
       }
       return item;
     });
-    // console.log(res.result);
     commit("getChooseGoods", res.result);
   }
 };

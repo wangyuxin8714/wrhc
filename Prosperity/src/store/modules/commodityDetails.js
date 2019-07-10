@@ -18,24 +18,25 @@ const actions = {
     //获取商品详情
     async getDetailList({ commit }) {
         let data = await details(state.pid)
+        console.log('商品详情...',data)
         commit("getList", data.result)
-        console.log("data...",data)
     },
     //获取商品详情图片
     async getDetailImgList({ commit }) {
         let data = await detailsImg({pid:state.pid,basePid:state.basePid,userIdentity:state.userIdentity})
+        console.log('商品详情图片...',data)
         commit("getImgList",data.result)
     },
     //获取商品详情提示
     async getDetailRemind({ commit }) {
         let data = await detailsRemind(state.sstid)
-        console.log("提示data...", data)
+        console.log('商品详情提示...',data)
         commit("getRemind",data.result)
     },
     //获取商品详情选择
     async getDetailChoose({ commit }) {
         let data = await detailsChoose(state.pid)
-        console.log("选择data...", data)
+        console.log('商品详情选择...',data)
         commit("getChoose",data.result)
     }
 }
@@ -52,7 +53,7 @@ const mutations = {
         state.sstid=obj.sstid
         state.userIdentity=obj.userIdentity
         state.basePid=obj.basePid
-        
+        console.log("想要的obj...",state.obj)
     },
     getImgList(state,arr){
         state.arr=arr

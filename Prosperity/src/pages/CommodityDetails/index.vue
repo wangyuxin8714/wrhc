@@ -3,10 +3,10 @@
     <div class="box">
       <div class="wop-swiper">
         <div v-if="obj.supplierProductPictureVoList.length">
-          <mySwiper :swiperList="obj.supplierProductPictureVoList"/>
+          <mySwiper :swiperList="obj.supplierProductPictureVoList" />
         </div>
         <div v-else>
-          <img :src="obj.mainImgUrl">
+          <img :src="obj.mainImgUrl"/>
         </div>
       </div>
       <div class="tit">
@@ -14,7 +14,7 @@
           <span class="price money">￥</span>
           <span class="price">{{obj.salesPrice}}</span>
           <span class="num">{{obj.vipPrice}}</span>
-          <img src="/static/images/黑卡@2x.png" alt>
+          <img src="/static/images/黑卡@2x.png" alt/>
         </div>
         <span class="share">分享赚{{obj.memberDiscountPrice}}</span>
       </div>
@@ -27,8 +27,8 @@
           <span>选择</span>
           <div class="rights">
             <span>{{chooseArr[0].aname}}</span>
-            <span>
-              <img src="/static/images/jt.png" alt>
+            <span @click="getDialog">
+              <img src="/static/images/jt.png" alt/>
             </span>
           </div>
         </li>
@@ -45,26 +45,29 @@
         <div v-for="(item,index) in arr" :key="index">
           <cover-image :src="item.imgUrl"/>
         </div>
-      </div>
+      </div> 
     </div>
     <footer class="footer">
-      <button>分享赚{{obj.memberDiscountPrice}}</button>
+      <button @click="gotoSharingPage">分享赚{{obj.memberDiscountPrice}}</button>
       <button>立即购买</button>
     </footer>
+     <myDialog v-if="flag" :arr="chooseArr" :flag="flag" :url="obj.mainImgUrl" @cancleClick="cancle"/>
   </div>
 </template>
 <script>
-//import Dialog from "../../components/dialog"
+import myDialog from "@/components/dialog"
 import mySwiper from "@/components/swiper";
 import { mapActions, mapState } from "vuex";
 export default {
   props: {},
   components: {
-    //Dialog
+    myDialog,
     mySwiper
   },
   data() {
-    return {};
+    return {
+      flag:false
+    };
   },
   computed: {
     ...mapState({
@@ -80,9 +83,21 @@ export default {
       getDetailImgList: "commodityDetails/getDetailImgList",
       getDetailRemind: "commodityDetails/getDetailRemind",
       getDetailChoose: "commodityDetails/getDetailChoose"
-    })
+    }),
+    getDialog(){
+      this.flag=!this.flag;
+    },
+    cancle(){
+      this.flag=!this.flag;
+    },
+    gotoSharingPage(){
+      wx.navigateTo({
+        url:'/pages/sharingPages/main'
+      })
+    }
   },
-  created() {},
+  created() {
+  },
   mounted() {},
   onLoad() {
     this.getDetailList(),
@@ -103,6 +118,9 @@ export default {
     flex: 1;
     width: 100%;
     overflow-y: scroll;
+    .mySwiper{
+      height: 244px !important;
+    }
     .tit {
       height: 27px;
       padding: 5rpx 20rpx;

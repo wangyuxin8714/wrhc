@@ -15,7 +15,7 @@
             订单总计: <span>￥{{price}}</span>
          </div>
       </div>
-      <button>去付款</button>
+      <button >去付款</button>
   </div>
 </template>
 <script>
@@ -24,8 +24,20 @@ export default {
     return {
       minute:null,
       second:null,
-      price:null
+      price:null,
     }
+  },
+  props: {},
+  components: {},
+  computed: {
+    
+  },
+  methods: {
+    
+  },
+  created() {},
+  mounted() {
+
   },
   onLoad(option){
     let obj=JSON.parse(option.obj);

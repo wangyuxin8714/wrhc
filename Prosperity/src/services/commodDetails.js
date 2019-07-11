@@ -17,3 +17,19 @@ export let details = pid=>{
  export let detailsChoose=pid=>{
     return request.post("/api/open/product/sku/attrs/1.0.0?pid="+pid)
  }
+
+ //获取颜色尺寸
+export let getColorSize=params=>{
+   return request.post("/api/open/product/sku/query/1",params)
+}
+
+export let getplaceOrder=params=>{
+   console.log("params",params)
+   return request.post("/api/open/order/prepare/1.0.0",params)
+}
+
+
+export let getgopayment=params=>{
+   console.log("params",params)
+   return request.post("/api/open/order/place/order/1.0.0",params)
+}

@@ -49,15 +49,9 @@
     </div>
     <footer class="footer">
       <button @click="gotoSharingPage">分享赚{{obj.memberDiscountPrice}}</button>
-      <button>立即购买</button>
+      <button @click="gotoSubmission">立即购买</button>
     </footer>
-    <myDialog
-      v-if="flag"
-      :arr="chooseArr"
-      :flag="flag"
-      :url="obj.mainImgUrl"
-      @cancleClick="cancle"
-    />
+     <myDialog v-if="flag" :arr="chooseArr" :url="obj.mainImgUrl" @cancleClick="cancle"/>
   </div>
 </template>
 <script>
@@ -72,7 +66,9 @@ export default {
   },
   data() {
     return {
-      flag: false
+      flag:false,
+      buynum:0,
+      skukey:0
     };
   },
   computed: {
@@ -89,15 +85,46 @@ export default {
       getDetailImgList: "commodityDetails/getDetailImgList",
       getDetailRemind: "commodityDetails/getDetailRemind",
       getDetailChoose: "commodityDetails/getDetailChoose",
+      getColorSize:"commodityDetails/getColorSize",
+      getplaceOrder:"commodityDetails/getplaceOrder",
     }),
-    ...mapMutations({
-      gotoSharingPage:"commodityDetails/gotoSharingPage"
-    }),
-    getDialog() {
-      this.flag = !this.flag;
+    async gotoSubmission(){
+      let arr=[]
+      let item={}
+      item={
+          pid:this.obj.pid,
+          buyNum:this.buynum,
+          skuKey:this.skukey
+      }
+      arr.push(item)
+      arr=JSON.stringify(arr)
+      let res=await this.getplaceOrder({
+        orderChannel:this.buynum,
+        skuPidNums:arr
+      })
+      if(res.res_code===1){
+        wx.navigateTo({
+          url:'/pages/placeOrder/main'
+        })
+      }
     },
-    cancle() {
-      this.flag = !this.flag;
+    async getDialog(){
+      let vids=[];
+      let data=JSON.parse(this.obj.supplierProductSkuVoList[0].attributeValueJson)
+      data.forEach(item=>{
+        vids.push(item.valueVo.vid)
+      })
+      vids=JSON.stringify(vids)
+      let res=await this.getColorSize({
+        pid:this.obj.pid,
+        vids
+      })
+      if(res.res_code===1){
+        this.flag=true;  
+      }
+    },
+    cancle(){
+      this.flag=false;
     },
     gotoSharingPage() {
       wx.navigateTo({
@@ -105,10 +132,23 @@ export default {
       });
     }
   },
-  created() {},
-  mounted() {},
+  created() {
+  },
+  mounted() {
+    this.$bus.$on("close",(res)=>{
+      this.flag=res
+    })
+    this.$bus.$on("num",res=>{
+      this.buynum=res.num
+      this.skukey=res.skukey
+      this.flag=false
+    })
+  },
+  onShow(){
+
+  },
   onLoad() {
-    this.getDetailList(),
+      this.getDetailList(),
       this.getDetailImgList(),
       this.getDetailRemind(),
       this.getDetailChoose();

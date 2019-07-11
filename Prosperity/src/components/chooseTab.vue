@@ -31,41 +31,41 @@
   </main>
 </template>
 <script>
-import { mapState,mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   props: ["classData"],
   components: {},
   data() {
     return {
-      cid:0,
-      sortType:3
+      cid: 0,
+      sortType: 3
     };
   },
   computed: {},
   methods: {
     ...mapMutations({
-      gotocommodityDtails:"commodityDetails/gotocommodityDtails"
+      gotocommodityDtails: "commodityDetails/gotocommodityDtails"
     }),
     ...mapActions({
       getClassData: "classify/getClassData"
     }),
-    
-    taball(){
+
+    taball() {
       this.getClassData({
         pageIndex: 1,
         cid: this.cid,
         sortType: 1
       });
     },
-    tabnew(){
+    tabnew() {
       this.getClassData({
         pageIndex: 1,
         cid: this.cid,
         sortType: 2
       });
     },
-    tabprice(){
-      this.sortType=this.sortType===3?4:3
+    tabprice() {
+      this.sortType = this.sortType === 3 ? 4 : 3;
       this.getClassData({
         pageIndex: 1,
         cid: this.cid,
@@ -75,9 +75,9 @@ export default {
   },
   created() {},
   mounted() {
-    this.$bus.$on("cid",cid=>{
-      this.cid=cid
-    })
+    this.$bus.$on("cid", cid => {
+      this.cid = cid;
+    });
   }
 };
 </script>

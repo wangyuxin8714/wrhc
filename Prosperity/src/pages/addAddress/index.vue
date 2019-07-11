@@ -68,103 +68,87 @@ export default {
         }
     },
     computed: {
-         ...mapState({
-           current: state=>state.address.current
-        }),
+      ...mapState({
+        current: state => state.address.current
+      })
     },
     methods: {
-        ...mapActions({
-            addAddressActions:'address/addAddressActions'
-        }),
-        changelabel(ind){
-          this.ind=ind
-        },
-        bindRegionChange: function (e) {
-            this.current.region=[...e.target.value];
-            this.current.code=[...e.target.code]            
-        },
-        
-  },
-  computed: {
-    ...mapState({
-      current: state => state.address.current
-    })
-  },
-  methods: {
-    ...mapActions({
-      addAddressActions: "address/addAddressActions"
-    }),
-    bindRegionChange: function(e) {
-      this.current.region = [...e.target.value];
-      this.current.code = [...e.target.code];
-    },
-
-    switchChange(e) {
-      this.current.state = e.target.value ? 1 : 0;
-    },
-    async submit() {
-      // 判断收货人是否为空
-      if (!this.current.consignee) {
-        wx.showToast({
-          title: "请输入收货人", //提示的内容,
-          icon: "none" //图标,
+      ...mapActions({
+        addAddressActions: "address/addAddressActions"
+      }),
+      changelabel(ind){
+        this.ind=ind
+      },
+      bindRegionChange: function(e) {
+        this.current.region = [...e.target.value];
+        this.current.code = [...e.target.code];
+      },
+      switchChange(e) {
+        this.current.state = e.target.value ? 1 : 0;
+      },
+      async submit() {
+        // 判断收货人是否为空
+        if (!this.current.consignee) {
+          wx.showToast({
+            title: "请输入收货人", //提示的内容,
+            icon: "none" //图标,
+          });
+          return;
+        }
+        // 判断手机号是否符合规范
+        if (
+          !/^1(3|4|5|7|8)\d{9}$/.test(this.current.consigneePhone) ||
+          !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(
+            this.current.consigneePhone
+          )
+        ) {
+          wx.showToast({
+            title: "请输入面试联系人的手机或座机", //提示的内容,
+            icon: "none" //图标,
+          });
+          return;
+        }
+        // 判断收货地址是否为空
+        if (this.current.region.length == 0) {
+          wx.showToast({
+            title: "请输入收货地址", //提示的内容,
+            icon: "none" //图标,
+          });
+          return;
+        }
+        // 判断详细收货地址是否为空
+        if (!this.current.address) {
+          wx.showToast({
+            title: "请输入详细收货地址", //提示的内容,
+            icon: "none" //图标,
+          });
+          return;
+        }
+        this.current.addressTag = this.ind;
+        let data = await this.addAddressActions({
+          provinceId: this.current.code[0],
+          provinceName: this.current.region[0],
+          cityId: this.current.code[1],
+          cityName: this.current.region[1],
+          areaId: this.current.code[2],
+          areaName: this.current.region[2],
+          ...this.current
         });
-        return;
-      }
-      // 判断手机号是否符合规范
-      if (
-        !/^1(3|4|5|7|8)\d{9}$/.test(this.current.consigneePhone) ||
-        !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(
-          this.current.consigneePhone
-        )
-      ) {
-        wx.showToast({
-          title: "请输入面试联系人的手机或座机", //提示的内容,
-          icon: "none" //图标,
-        });
-        return;
-      }
-      // 判断收货地址是否为空
-      if (this.current.region.length == 0) {
-        wx.showToast({
-          title: "请输入收货地址", //提示的内容,
-          icon: "none" //图标,
-        });
-        return;
-      }
-      // 判断详细收货地址是否为空
-      if (!this.current.address) {
-        wx.showToast({
-          title: "请输入详细收货地址", //提示的内容,
-          icon: "none" //图标,
-        });
-        return;
-      }
-      this.current.addressTag = this.ind;
-      let data = await this.addAddressActions({
-        provinceId: this.current.code[0],
-        provinceName: this.current.region[0],
-        cityId: this.current.code[1],
-        cityName: this.current.region[1],
-        areaId: this.current.code[2],
-        areaName: this.current.region[2],
-        ...this.current
-      });
-      // console.log('data...',data)
-      if (data.res_code == 1) {
-        wx.showModal({
-          title: "温馨提示", //提示的标题,
-          content: data.message, //提示的内容,
-          showCancel: false,
-          confirmText: "确定", //确定按钮的文字，默认为取消，最多 4 个字符,
-          confirmColor: "#197DBF", //确定按钮的文字颜色,
-          success: res => {
-            if (res.confirm) {
-              wx.navigateTo({ url: "/pages/addressView/main" });
+        // console.log('data...',data)
+        if (data.res_code == 1) {
+          wx.showModal({
+            title: "温馨提示", //提示的标题,
+            content: data.message, //提示的内容,
+            showCancel: false,
+            confirmText: "确定", //确定按钮的文字，默认为取消，最多 4 个字符,
+            confirmColor: "#197DBF", //确定按钮的文字颜色,
+            success: res => {
+              if (res.confirm) {
+                wx.navigateTo({ url: "/pages/addressView/main" });
+              }
             }
-          }
-        });
-      }
+          });
+        }
     }
   }
 };

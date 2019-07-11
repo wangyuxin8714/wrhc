@@ -76,7 +76,7 @@
         </div>
         <div>微信支付</div>
       </div>
-      <div class="right">去支付</div>
+      <div class="right" @click="gotoSettlementView">去支付</div>
     </div>
   </div>
 </template>
@@ -88,7 +88,13 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    gotoSettlementView(){
+      wx.navigateTo({
+        url:"/pages/settlementView/main"
+      })
+    }
+  },
   created() {},
   mounted() {}
 };

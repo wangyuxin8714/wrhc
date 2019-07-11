@@ -16,7 +16,7 @@
           <span class="num">{{obj.vipPrice}}</span>
           <img src="/static/images/黑卡@2x.png" alt/>
         </div>
-        <span class="share">分享赚{{obj.memberDiscountPrice}}</span>
+        <span class="share" @click="gotoSharingPage">分享赚{{obj.memberDiscountPrice}}</span>
       </div>
       <div class="title">
         <h3>{{obj.title}}</h3>
@@ -57,7 +57,7 @@
 <script>
 import myDialog from "@/components/dialog"
 import mySwiper from "@/components/swiper";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState,mapMutations} from "vuex";
 export default {
   props: {},
   components: {
@@ -82,18 +82,16 @@ export default {
       getDetailList: "commodityDetails/getDetailList",
       getDetailImgList: "commodityDetails/getDetailImgList",
       getDetailRemind: "commodityDetails/getDetailRemind",
-      getDetailChoose: "commodityDetails/getDetailChoose"
+      getDetailChoose: "commodityDetails/getDetailChoose",
+    }),
+    ...mapMutations({
+      gotoSharingPage:"commodityDetails/gotoSharingPage"
     }),
     getDialog(){
       this.flag=!this.flag;
     },
     cancle(){
       this.flag=!this.flag;
-    },
-    gotoSharingPage(){
-      wx.navigateTo({
-        url:'/pages/sharingPages/main'
-      })
     }
   },
   created() {
@@ -108,6 +106,12 @@ export default {
 };
 </script>
 <style  scoped lang="scss">
+.wop-swiper{
+  height: 244px;
+  >div{
+    height: 100%;
+  }
+}
 .detailBox {
   width: 100%;
   height: 100%;

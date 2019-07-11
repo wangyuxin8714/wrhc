@@ -9,12 +9,12 @@
           <dl>
             <dd>
               <p class="name">
-                <span>皮卡丘</span>
-                <span>15733197896</span>
+                <span>{{placeOrder.subOrder[0].consignee}}</span>
+                <span>{{placeOrder.subOrder[0].consigneePhone}}</span>
               </p>
               <p class="fly">
                 <cover-image class="location" src="/static/images/locationIcon.png"/>
-                <span>天津市天津市河东区那就是</span>
+                <span>{{placeOrder.subOrder[0].addressDetail}}</span>
               </p>
             </dd>
             <dt>
@@ -32,15 +32,15 @@
         <dl class="center">
           <dd>
             <cover-image
-              src="https://jnup.oss-cn-beijing.aliyuncs.com/product/5ff2e16ecbe2d3582065d1c89e50d231.jpg"
+              :src="placeOrder.subOrder[0].orderItemProductInfos[0].mainImgUrl"
             />
           </dd>
           <dt>
-            <p class="title">韩国FHD血橙面膜滋养救急补水舒缓肌肤收缩毛孔 30片/盒</p>
-            <p class="title tit">规格：韩国FHD血橙面膜 30片/盒</p>
+            <p class="title">{{placeOrder.subOrder[0].orderItemProductInfos[0].productTitle}} </p>
+            <p class="title tit">规格：{{placeOrder.subOrder[0].orderItemProductInfos[0].skuName}} </p>
             <p class="title">
-              <span>￥99</span>
-              <span>x6</span>
+              <span>￥{{placeOrder.subOrder[0].orderItemProductInfos[0].salesPrice}}</span>
+              <span>x{{placeOrder.subOrder[0].orderItemProductInfos[0].productNumber}}</span>
             </p>
           </dt>
         </dl>
@@ -53,7 +53,7 @@
         <span>订单总计</span>
         <div>
           <span>￥</span>
-          <span class="money">99</span>
+          <span class="money">{{placeOrder.subOrder[0].totalAmount}}</span>
         </div>
       </div>
       <div class="three">
@@ -72,25 +72,63 @@
       <div class="left">
         <div>
           <span class="price">总计￥</span>
-          <span class="num">594</span>
+          <span class="num">{{placeOrder.subOrder[0].totalAmount}}</span>
         </div>
         <div>微信支付</div>
       </div>
-      <div class="right">去支付</div>
+      <div class="right" @click="gopayment">去支付</div>
     </div>
   </div>
 </template>
 <script>
+import {mapState,mapActions} from "vuex"
 export default {
   props: {},
   components: {},
   data() {
-    return {};
+    return {
+      prepareId:0
+    };
   },
-  computed: {},
-  methods: {},
+  computed: {
+    ...mapState({
+      placeOrder: state => state.commodityDetails.placeOrder,
+    })
+  },
+  methods: {
+    ...mapActions({
+      getgopayment:"commodityDetails/getgopayment",
+    }),
+    async gopayment(){
+      let res=await this.getgopayment({
+        payChannel:1,
+        prepareId:this.prepareId,
+        platform:4
+      })
+      // if(res.res_code===1){
+      console.log(res)
+        wx.requestPayment({
+          timeStamp: res.result.timeStamp,
+          nonceStr:  res.result.nonceStr,
+          package:  res.result.package,
+          signType: 'MD5',
+          paySign:res.result.appId,
+          success (res) { 
+              console.log("支付成功");
+          },
+          fail (res) {
+            console.log("支付失败")
+            wx.navigateTo({ url: "/pages/transactionDetail/main" });
+          }
+        })
+      // }
+    }
+  },
   created() {},
-  mounted() {}
+  mounted() {
+    console.log(this.placeOrder)
+    this.prepareId=this.placeOrder.prepareId
+  }
 };
 </script>
 <style lang="scss">

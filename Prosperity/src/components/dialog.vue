@@ -6,65 +6,130 @@
                     <span>花色</span>
                     <span>尺寸</span>
                 </p>
-                <p>X</p>
+                <p @click="close">X</p>
             </div>
             <dl>
                 <dt>
-                    <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/28a3c7a08b7199887e50e7e64f0250df.jpg" alt="">
+                    <img v-if="!numflag||colorSize.attributeValueJson[0].valueVo.imgUrl===''" :src="url" alt="">
+                    <img v-else :src="colorSize.attributeValueJson[0].valueVo.imgUrl" alt="">
                 </dt>
                 <dd>
-                    <p>￥135</p>
-                    <p>库存：100</p>
+                    <p>￥{{numflag?colorSize.salesPrice:0}}</p>
+                    <p>库存：{{numflag?colorSize.store:0}}</p>
                 </dd>
             </dl>
-            <div class="colors">
-                <p>花色</p>
+            <div class="colors" v-for="(item,index) in arr" :key="index">
+                <p>{{item.aname}}</p>
                 <ul>
-                    <li>绅士</li>
-                    <li>绅士</li>
-                    <li>绅士</li>
-                </ul>
-            </div>
-            <div class="colors">
-                <p>尺寸</p>
-                <ul>
-                    <li>0.9米床</li>
-                    <li>0.9米床</li>
-                    <li>0.9米床</li>
+                    <li v-for="(val,index1) in item.attributeValueRelationVoList" 
+                    :key="val.vid"
+                    :class="{'active':index1==ind[index]}"
+                    @click="colortab(index,index1,val.vid)"
+                    >{{val.vname}}</li>
                 </ul>
             </div>
             <div class="numbox">
                 <p>数量</p>
                 <div class="num">
-                    <span>-</span>
-                    <span class="number">1</span>
-                    <span>+</span>
+                    <span @click="updatenum(num-1)">-</span>
+                    <span class="number">{{num}}</span>
+                    <span @click="updatenum(num+1)">+</span>
                 </div>
             </div>
-            <button>
+            <button @click="trannum">
                 确定
             </button>
         </div> 
     </div>
 </template>
 <script>
-import myCount from "@/components/conut"
-import {mapMutations} from "vuex"
+import {mapState,mapMutations,mapActions} from "vuex"
 export default {
-    props:["arr","flag","url"],
+    props:["arr","url"],
     components:{
-     myCount
     },
     data(){
         return {
-         
+            ind:[],
+            colorvid:0,
+            sizevid:0,
+            skukey:0,
+            numflag:true,
+            num:1
         }
     },
     computed:{
-
+        ...mapState({
+            colorSize:state=>state.commodityDetails.colorSize
+        })
     },
     methods:{
+        ...mapActions({
+            getColorSize:"commodityDetails/getColorSize"
+        }),
+        trannum(){
+            this.$bus.$emit("num",{num:this.num,skukey:this.skukey})
+        },
+        updatenum(num){
+            this.num=num
+            if(num===1){
+                this.num=1
+            }
+        },
+        close(){
+            this.$bus.$emit("close",false)
+        },
+        async colortab(ind,ind1,vid){
+            let sizeArr=[];
+            this.ind=this.ind.map((val,key)=>{      
+                if(key==ind){
+                    val=ind1
+                }
+                return val
+            })
+            if(ind===0){
+                this.colorvid=vid
+            }
+            if(ind===1){
+                this.sizevid=vid
+            }           
+            sizeArr.push(this.colorvid)
+            if(this.colorSize.attributeValueJson.length>1){
+                sizeArr.push(this.sizevid)
+            }
+            sizeArr=JSON.stringify(sizeArr)
+            let res=await this.getColorSize({
+                pid:this.colorSize.pid,
+                vids:sizeArr
+            })
+            console.log(res)
+            if(res.res_code===5000){
+                this.numflag=false
+            }else{
+                this.numflag=true
+            }
+        }  
+    },
+    created(){
+        console.log("this.colorSize",this.colorSize)
+        console.log("this.colorSize",this.colorSize.attributeValueJson[0].valueVo.imgUrl==="")
+        this.colorvid=this.colorSize.attributeValueJson[0].valueVo.vid
+        if(this.colorSize.attributeValueJson.length>1){
+            this.sizevid=this.colorSize.attributeValueJson[1].valueVo.vid
+        }
+        this.skukey=this.colorSize.skuKey
+    },
+    mounted() {
+    },
+    onLoad(){
+        this.arr.forEach(val=>{
+            if(val){
+                this.ind.push(0)
+            }
+        })
+
     }
+    
 }
 </script>
 <style  scoped lang="scss">
@@ -136,12 +201,7 @@ export default {
                     font-size:24rpx;
                     border-radius:10rpx;
                 }
-                .active1{
-                    background:#33d6c5;
-                    color:#fff;
-                    border:2rpx solid #33d6c5;
-                }
-                .active2{
+                .active{
                     background:#33d6c5;
                     color:#fff;
                     border:2rpx solid #33d6c5;
@@ -181,6 +241,7 @@ export default {
             line-height:110rpx;
             text-align:center;
             color:#fff;
+            border-radius: 0;
             background:linear-gradient(217deg,#f86367,#fb2579);
         }
     }

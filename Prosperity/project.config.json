@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": 17,
 			"list": [
 				{
 					"id": 0,
@@ -155,6 +155,14 @@
 					"id": -1,
 					"name": "订单列表",
 					"pathName": "pages/myOrder/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "去付款",
+					"pathName": "pages/settlementView/main",
+					"query": "",
 					"scene": null
 				}
 			]

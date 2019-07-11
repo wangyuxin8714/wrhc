@@ -91,7 +91,7 @@ export default {
                 confirmColor: '#197DBF', //确定按钮的文字颜色,
                 success: res => {
                   if(res.confirm){
-                    this.orderArr[index].cancleStatus=0
+                    this.orderArr[index].cancleStatus=1
                   }
                 }
             })
@@ -112,13 +112,6 @@ export default {
                 url:  "/pages/CommodityDetails/main"
             })
         }
-    },
-    onShow(){
-       this.ind=0;
-       this.orderActions({
-            pageIndex:1,
-            orderStatus:0
-        })
     }
 }
 </script>

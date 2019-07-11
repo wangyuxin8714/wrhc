@@ -19,9 +19,10 @@ fly.interceptors.request.use(request => {
     request.headers["openid"] = openid;
   }
 
-  request.headers['Cookie']=""
-  request.headers['trackId']="F649B34989975F268EA5BC4927E7C2365DBB8293767D955992FF410009F6B2DE301BCDFBE166230EBF083C72B5B6A948277C0041980DAC5E46FA1EF475B12D4773F05A5E984CF1D814817C9546DF831BF9D9BD6C1F2231AFA450731B6837E7084E77DC9918A436BC"
-  request.headers['content-type']="application/x-www-form-urlencoded"
+  request.headers["Cookie"] = "";
+  request.headers["trackId"] =
+    "F649B34989975F26A6E26E1230C1D3686518DDF9A14811057B9954BFC7E2D051D33895EBF327C23549EAC9242828A5C1D5CC52D4246D9734B14EB25FBDA65DA002F3C3B29DF1BE8CF0E83FE909C74104B7058F8097407C6CE926B12E054F7DDD";
+  request.headers["content-type"] = "application/x-www-form-urlencoded";
   // 给所有请求添加自定义header
   // request.headers["Cookie"] = map(cookies, (v, k) => k + '=' + v).join(';')
 

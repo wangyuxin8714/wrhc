@@ -1,7 +1,7 @@
 <template>
   <div class="shareWrap">
-    <h2>男童春装套装2019新款条纹T恤儿童背带裤套装潮卡通童装</h2>
-    <div class="price">【在售价】69元</div>
+    <h2>{{obj.title}}</h2>
+    <div class="price">【在售价】{{obj.salesPrice}}</div>
     <div class="center">
       <div class="left">
         <canvas style="width: 168px; height: 298px;"></canvas>
@@ -9,10 +9,9 @@
       <div class="right">
         <div class="prolist">
           <cover-image class="img1" src="/static/images/true2.png"/>
-          <cover-image
+          <img
             class="img2"
-            src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/66c595c9ee1860102eecd765dc214e8252ef5895.jpg"
-          />
+            :src="obj.mainImgUrl"/>
         </div>
       </div>
     </div>
@@ -31,16 +30,27 @@
   </div>
 </template>
 <script>
+import {mapState} from "vuex"
 export default {
   props: {},
   components: {},
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    ...mapState({
+       obj: state => state.commodityDetails.obj,
+    })
+  },
   methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
+  onShow(){
+      wx.showLoading({
+      title: '加载中',
+    })
+
+  }
 };
 </script>
 <style scoped lang="scss">

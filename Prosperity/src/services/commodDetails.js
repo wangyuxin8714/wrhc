@@ -2,7 +2,6 @@
 import request from '../utils/request';
 // 商品详情
 export let details = pid=>{
-
     return request.post('api/open/product/info/1.0.0?pid='+pid)
  }
  //商品详情图片

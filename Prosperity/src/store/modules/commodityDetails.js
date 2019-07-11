@@ -27,19 +27,16 @@ const actions = {
       basePid: state.basePid,
       userIdentity: state.userIdentity
     });
-    console.log("商品详情图片...", data);
     commit("getImgList", data.result);
   },
   //获取商品详情提示
   async getDetailRemind({ commit }) {
     let data = await detailsRemind(state.sstid);
-    // console.log("提示data...", data)
     commit("getRemind", data.result);
   },
   //获取商品详情选择
   async getDetailChoose({ commit }) {
     let data = await detailsChoose(state.pid);
-    // console.log("选择data...", data)
     commit("getChoose", data.result);
   }
 };
@@ -60,7 +57,6 @@ const mutations = {
     state.sstid = obj.sstid;
     state.userIdentity = obj.userIdentity;
     state.basePid = obj.basePid;
-    console.log("想要的obj...", state.obj);
   },
   getImgList(state, arr) {
     state.arr = arr;
@@ -70,7 +66,13 @@ const mutations = {
   },
   getChoose(state, chooseArr) {
     state.chooseArr = chooseArr;
-  }
+  },
+  //去分享页
+  gotoSharingPage(state){
+    wx.navigateTo({
+      url:'/pages/sharingPages/main'
+    })
+  },
 };
 
 export default {

@@ -29,7 +29,6 @@ export default new Vuex.Store({
         home,
         order,
         commodityDetails,
-
         classify
     },
     state:{

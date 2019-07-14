@@ -7,35 +7,35 @@
       <TopTab :flag="flag"/>
     </div>
     <div class="wrap_main">
-      <div class="main_swiper">
-        <Swipers :swiperList="chooseGoodList[0].items"/>
-      </div>
-      <div class="main_go">
-        <div class="main_go_div">
-          <div class="main_go_left">
-            <img
-              class="main_img"
-              @click="godisser(chooseGoodList[1].items[0].jumpUrl)"
-              :src="chooseGoodList[1].items[0].imgUrl"
-            >
-          </div>
-          <div class="main_go_right">
-            <img
-              class="main_go_top"
-              @click="godisser(chooseGoodList[1].items[1].jumpUrl)"
-              :src="chooseGoodList[1].items[1].imgUrl"
-            >
-            <img
-              class="main_go_bottom"
-              @click="godisser(chooseGoodList[1].items[2].jumpUrl)"
-              :src="chooseGoodList[1].items[2].imgUrl"
-            >
+      <div v-for="(item,index) in chooseGoodList" :key="index">
+        <div class="main_swiper" v-if="item.type === 'carouselImg'">
+          <Swipers :swiperList="item.items"/>
+        </div>
+        <div class="main_go">
+          <div class="main_go_div" v-if="item.type==='adThree'">
+            <div class="main_go_left">
+              <img
+                class="main_img"
+                @click="godisser(item.items[0].jumpUrl)"
+                :src="item.items[0].imgUrl"
+              >
+            </div>
+            <div class="main_go_right">
+              <img
+                class="main_go_top"
+                @click="godisser(item.items[1].jumpUrl)"
+                :src="item.items[1].imgUrl"
+              >
+              <img
+                class="main_go_bottom"
+                @click="godisser(item.items[2].jumpUrl)"
+                :src="item.items[2].imgUrl"
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="main_summer_body" v-for="(item,index) in chooseGoodList" :key="index">
-        <template v-if="index > 2">
-          <template v-if="item.pictUrl">
+        <div class="main_summer_body">
+          <template v-if="item.type === 'adOne'">
             <cover-image
               @click="godisser(item.jumpUrl)"
               class="main_summer_img"
@@ -43,11 +43,11 @@
             />
           </template>
 
-          <template v-if="item.items">
+          <template v-if="item.type === 'sixProduct'">
             <Titles/>
             <my-list :types="typeTop" :goodList="item.items"/>
           </template>
-        </template>
+        </div>
       </div>
       <Titles titFlag="titFlag"/>
       <my-list :types="typeLeft" :chooseList="chooseList"/>
@@ -156,12 +156,13 @@ export default {
   }
   .main_go {
     width: 100%;
+    height: auto;
     margin: 10px 0;
     .main_go_div {
+      height: 376rpx;
       display: flex;
       margin-top: 40rpx;
       padding: 0 2%;
-      height: 376rpx;
       box-sizing: border-box;
       .main_go_left {
         width: 40%;

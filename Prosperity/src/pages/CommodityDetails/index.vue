@@ -6,7 +6,7 @@
           <mySwiper :swiperList="obj.supplierProductPictureVoList"/>
         </div>
         <div v-else>
-          <img :src="obj.mainImgUrl">
+          <img :src="obj.mainImgUrl" class="elseImg">
         </div>
       </div>
       <div class="tit">
@@ -23,11 +23,11 @@
         <p>快递包邮</p>
       </div>
       <ul class="list">
-        <li class="lis">
+        <li class="lis" @click="getDialog">
           <span>选择</span>
           <div class="rights">
             <span>{{chooseArr[0].aname}}</span>
-            <span @click="getDialog">
+            <span>
               <img src="/static/images/jt.png" alt>
             </span>
           </div>
@@ -51,13 +51,13 @@
       <button @click="gotoSharingPage">分享赚{{obj.memberDiscountPrice}}</button>
       <button @click="gotoSubmission">立即购买</button>
     </footer>
-     <myDialog v-if="flag" :arr="chooseArr" :url="obj.mainImgUrl" @cancleClick="cancle"/>
+    <myDialog v-if="flag" :arr="chooseArr" :url="obj.mainImgUrl" @cancleClick="cancle"/>
   </div>
 </template>
 <script>
 import myDialog from "@/components/dialog";
 import mySwiper from "@/components/swiper";
-import { mapActions, mapState,mapMutations} from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   props: {},
   components: {
@@ -66,9 +66,9 @@ export default {
   },
   data() {
     return {
-      flag:false,
-      buynum:0,
-      skukey:0
+      flag: false,
+      buynum: 0,
+      skukey: 0
     };
   },
   computed: {
@@ -85,46 +85,48 @@ export default {
       getDetailImgList: "commodityDetails/getDetailImgList",
       getDetailRemind: "commodityDetails/getDetailRemind",
       getDetailChoose: "commodityDetails/getDetailChoose",
-      getColorSize:"commodityDetails/getColorSize",
-      getplaceOrder:"commodityDetails/getplaceOrder",
+      getColorSize: "commodityDetails/getColorSize",
+      getplaceOrder: "commodityDetails/getplaceOrder"
     }),
-    async gotoSubmission(){
-      let arr=[]
-      let item={}
-      item={
-          pid:this.obj.pid,
-          buyNum:this.buynum,
-          skuKey:this.skukey
-      }
-      arr.push(item)
-      arr=JSON.stringify(arr)
-      let res=await this.getplaceOrder({
-        orderChannel:this.buynum,
-        skuPidNums:arr
-      })
-      if(res.res_code===1){
+    async gotoSubmission() {
+      let arr = [];
+      let item = {};
+      item = {
+        pid: this.obj.pid,
+        buyNum: this.buynum,
+        skuKey: this.skukey
+      };
+      arr.push(item);
+      arr = JSON.stringify(arr);
+      let res = await this.getplaceOrder({
+        orderChannel: this.buynum,
+        skuPidNums: arr
+      });
+      if (res.res_code === 1) {
         wx.navigateTo({
-          url:'/pages/placeOrder/main'
-        })
+          url: "/pages/placeOrder/main"
+        });
       }
     },
-    async getDialog(){
-      let vids=[];
-      let data=JSON.parse(this.obj.supplierProductSkuVoList[0].attributeValueJson)
-      data.forEach(item=>{
-        vids.push(item.valueVo.vid)
-      })
-      vids=JSON.stringify(vids)
-      let res=await this.getColorSize({
-        pid:this.obj.pid,
+    async getDialog() {
+      let vids = [];
+      let data = JSON.parse(
+        this.obj.supplierProductSkuVoList[0].attributeValueJson
+      );
+      data.forEach(item => {
+        vids.push(item.valueVo.vid);
+      });
+      vids = JSON.stringify(vids);
+      let res = await this.getColorSize({
+        pid: this.obj.pid,
         vids
-      })
-      if(res.res_code===1){
-        this.flag=true;  
+      });
+      if (res.res_code === 1) {
+        this.flag = true;
       }
     },
-    cancle(){
-      this.flag=false;
+    cancle() {
+      this.flag = false;
     },
     gotoSharingPage() {
       wx.navigateTo({
@@ -132,23 +134,20 @@ export default {
       });
     }
   },
-  created() {
-  },
+  created() {},
   mounted() {
-    this.$bus.$on("close",(res)=>{
-      this.flag=res
-    })
-    this.$bus.$on("num",res=>{
-      this.buynum=res.num
-      this.skukey=res.skukey
-      this.flag=false
-    })
+    this.$bus.$on("close", res => {
+      this.flag = res;
+    });
+    this.$bus.$on("num", res => {
+      this.buynum = res.num;
+      this.skukey = res.skukey;
+      this.flag = false;
+    });
   },
-  onShow(){
-
-  },
+  onShow() {},
   onLoad() {
-      this.getDetailList(),
+    this.getDetailList(),
       this.getDetailImgList(),
       this.getDetailRemind(),
       this.getDetailChoose();
@@ -156,12 +155,6 @@ export default {
 };
 </script>
 <style  scoped lang="scss">
-.wop-swiper{
-  height: 244px;
-  >div{
-    height: 100%;
-  }
-}
 .detailBox {
   width: 100%;
   height: 100%;
@@ -169,15 +162,24 @@ export default {
   flex-direction: column;
   overflow: hidden;
   .box {
-    flex: 1;
     width: 100%;
+    height: auto;
     overflow-y: scroll;
-    .mySwiper {
-      height: 244px !important;
+    .wop-swiper {
+      height: 244px;
+      > div {
+        height: 100%;
+        .elseImg{
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
     .tit {
+      width: 100%;
       height: 27px;
       padding: 5rpx 20rpx;
+      box-sizing: border-box;
       display: flex;
       justify-content: space-between;
       .ones {
@@ -207,8 +209,9 @@ export default {
         border: 2rpx solid #fc5d7b;
         color: #fc5d7b;
         padding: 6rpx 20rpx;
+        box-sizing: border-box;
         height: 40rpx;
-        line-height: 40rpx;
+        line-height: 32rpx;
         border-top-left-radius: 20rpx;
         border-bottom-left-radius: 20rpx;
       }
@@ -225,13 +228,13 @@ export default {
         font-size: 24rpx;
         color: #999da2;
         padding: 10px 0;
+        box-sizing: border-box;
       }
     }
     .list {
       list-style: none;
       padding: 0 2%;
       box-sizing: border-box;
-
       .lis {
         display: flex;
         font-size: 26rpx;
@@ -257,6 +260,8 @@ export default {
         }
         .right {
           color: #fc5d7b;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         div {
           display: flex;
@@ -271,6 +276,9 @@ export default {
   .footer {
     width: 100%;
     height: 40px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     button {

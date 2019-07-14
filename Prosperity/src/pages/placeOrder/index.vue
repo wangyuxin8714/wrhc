@@ -125,14 +125,6 @@ export default {
       // }
     }
   },
-  computed: {},
-  methods: {
-    gotoSettlementView(){
-      wx.navigateTo({
-        url:"/pages/settlementView/main"
-      })
-    }
-  },
   created() {},
   mounted() {
     console.log(this.placeOrder)
